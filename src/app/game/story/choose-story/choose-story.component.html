@@ -1,0 +1,23 @@
+@if(story.error()){
+  <p>An error happened</p>
+}
+
+@if(story.isLoading()) {
+  <p>Story is generating, please wait</p>
+}
+
+@if (story.hasValue() && !story.isLoading() && !story.error()) {
+  <h2>{{story.value()?.name}}</h2>
+  <br>
+  <p>Biome: {{story.value()?.biome}}</p>
+  <br>
+  <p>{{story.value()?.story_summary}}</p>
+  <br>
+  <p>Boss: {{story.value()?.boss_name}}</p>
+
+  <button (click)="story.reload()">Generate a new story</button>
+  <button (click)="storySelected.emit(true)">Choose this story</button>
+}
+
+
+
