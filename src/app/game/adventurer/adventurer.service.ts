@@ -1,4 +1,4 @@
-import {Injectable, resource} from '@angular/core';
+import {Injectable, resource, ResourceRef, signal, WritableSignal} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {Adventurer} from './adventurer.class';
 
@@ -8,12 +8,20 @@ import {Adventurer} from './adventurer.class';
 export class AdventurerService {
   private apiUrl = `${environment.api.baseUrl}/adventurer`;
 
-  public adventurerResource = resource({
+  public adventurer : ResourceRef<Adventurer> = resource({
     request: () => null,
     loader: async ({request, abortSignal}) => this.fetchAdventurer(request, abortSignal),
   });
 
-  constructor() { }
+  constructor() {}
+
+  public setMaxHealthAndMana() {
+    this.adventurer.update((adventurer) => {
+      if(!adventurer) return undefined;
+
+      return { ...adventurer, currentMana: adventurer.mana, currentHealth: adventurer.health};
+    });
+  }
 
   // Function to fetch the story
   private async fetchAdventurer(request: any, abortSignal: AbortSignal): Promise<Adventurer> {

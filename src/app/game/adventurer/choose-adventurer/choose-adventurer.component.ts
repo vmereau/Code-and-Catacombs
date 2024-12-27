@@ -10,15 +10,16 @@ import {AdventurerService} from '../adventurer.service';
   styleUrl: './choose-adventurer.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ChooseAdventurerComponent implements OnInit {
+export class ChooseAdventurerComponent {
   public adventurer: ResourceRef<Adventurer>;
   @Output() adventurerSelected = new EventEmitter<boolean>();
 
   constructor(private adventurerService: AdventurerService) {
-    this.adventurer = this.adventurerService.adventurerResource;
+    this.adventurer = this.adventurerService.adventurer;
   }
 
-  ngOnInit() {
-    this.adventurer.reload();
+  public chooseAdventurer() {
+    this.adventurerService.setMaxHealthAndMana();
+    this.adventurerSelected.emit(true);
   }
 }

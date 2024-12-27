@@ -2,6 +2,8 @@ import {ChangeDetectionStrategy, Component, OnInit, signal} from '@angular/core'
 import {ChooseStoryComponent} from './story/choose-story/choose-story.component';
 import {ChooseAdventurerComponent} from './adventurer/choose-adventurer/choose-adventurer.component';
 import {GameService} from './game.service';
+import {ChooseSkillComponent} from './skill/choose-skill/choose-skill.component';
+import {AdventurerInfosComponent} from './adventurer/adventurer-infos/adventurer-infos.component';
 
 export enum GameStep {
   InitStory = 0,
@@ -14,7 +16,9 @@ export enum GameStep {
   selector: 'app-game',
   imports: [
     ChooseStoryComponent,
-    ChooseAdventurerComponent
+    ChooseAdventurerComponent,
+    ChooseSkillComponent,
+    AdventurerInfosComponent
   ],
   templateUrl: './game.component.html',
   standalone: true,
@@ -23,6 +27,7 @@ export enum GameStep {
 })
 export class GameComponent implements OnInit {
   public step = signal(GameStep.InitStory);
+  // public step = signal(GameStep.GameLoop);
   protected readonly GameStep = GameStep;
 
   constructor(private gameService: GameService) {}
@@ -32,5 +37,4 @@ export class GameComponent implements OnInit {
   setStep(step: GameStep) {
     this.step.set(step);
   }
-
 }

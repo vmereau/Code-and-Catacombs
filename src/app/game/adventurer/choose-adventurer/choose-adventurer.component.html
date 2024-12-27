@@ -18,7 +18,7 @@
   <span>Mana: {{adventurer.value()?.mana}}</span><br>
 
   <button (click)="adventurer.reload()">Generate a new adventurer</button>
-  <button (click)="adventurerSelected.emit(true)">Choose this adventurer</button>
+  <button (click)="chooseAdventurer()">Choose this adventurer</button>
 }
 
 

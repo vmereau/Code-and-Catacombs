@@ -11,4 +11,9 @@
 
 @if(step() === GameStep.InitSkills) {
   <h1>Choosing Skill</h1>
+  <app-choose-skill (skillSelected)="setStep(GameStep.GameLoop)"></app-choose-skill>
+}
+
+@if(step() === GameStep.GameLoop) {
+  <app-adventurer-infos></app-adventurer-infos>
 }

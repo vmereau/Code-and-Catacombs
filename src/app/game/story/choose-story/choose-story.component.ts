@@ -10,15 +10,11 @@ import {StoryService} from '../story.service';
   styleUrl: './choose-story.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ChooseStoryComponent implements OnInit {
+export class ChooseStoryComponent {
   public story: ResourceRef<Story>;
   @Output() storySelected = new EventEmitter<boolean>();
 
   constructor(private storyService: StoryService) {
     this.story = this.storyService.storyResource;
-  }
-
-  ngOnInit() {
-    this.story.reload();
   }
 }
