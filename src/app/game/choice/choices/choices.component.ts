@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Output, Signal} from '
 import {ChoiceSelectionComponent} from '../choice-selection/choice-selection.component';
 import {Choice} from '../choice.class';
 import {ChoiceService} from '../choice.service';
+import {GameService} from '../../game.service';
 
 @Component({
   selector: 'app-choices',

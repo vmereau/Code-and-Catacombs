@@ -11,13 +11,30 @@
 
 @if(step() === GameStep.InitSkills) {
   <h1>Choosing Skill</h1>
-  <app-choose-skill (skillSelected)="setStep(GameStep.GameLoop)"></app-choose-skill>
+  <app-choose-skill (skillSelected)="startGame()"></app-choose-skill>
 }
 
 @if(step() === GameStep.GameLoop) {
   <app-adventurer-infos></app-adventurer-infos>
 
-  @if(encounter() === Encouter.Choices) {
-    <app-choices (choiceSelected)="choiceSelected($event)"></app-choices>
+  @switch (encounter()) {
+    @case (Encouter.Choices) {
+      <app-choices (choiceSelected)="choiceSelected($event)"></app-choices>
+    }
+    @case (Encouter.Elite_fight) {
+      Elite fight !
+    }
+    @case (Encouter.Fight) {
+      Fight
+    }
+    @case (Encouter.Power) {
+      Power
+    }
+    @case (Encouter.Shop) {
+      Shop
+    }
+    @case (Encouter.Treasure) {
+      Treasure
+    }
   }
 }
