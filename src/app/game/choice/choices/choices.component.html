@@ -1,0 +1,13 @@
+@if(isError()){
+  <p>An error happened</p>
+}
+
+@if(isLoading()){
+  Chargement des choix...
+}
+
+@if (!isLoading() && !isError() && choices()) {
+  @for (choice of choices(); track choice) {
+    <app-choice-selection [choice]="choice" (choiceSelected)="choiceSelected.emit($event)"></app-choice-selection>
+  }
+}

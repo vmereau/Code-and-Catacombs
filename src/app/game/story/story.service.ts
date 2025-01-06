@@ -1,6 +1,7 @@
-import {Injectable, resource} from '@angular/core';
+import {computed, Injectable, resource, Signal} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {Story} from './story.class';
+import {Choice} from '../choice/choice.class';
 
 @Injectable({
   providedIn: 'root'
@@ -8,12 +9,19 @@ import {Story} from './story.class';
 export class StoryService {
   private apiUrl = `${environment.api.baseUrl}/story`;
 
-  public storyResource = resource({
-    request: () => null,
+  private storyResource = resource({
     loader: async ({request, abortSignal}) => this.fetchStory(request, abortSignal),
   });
 
+  public story: Signal<Story | undefined> = computed(() => this.storyResource.value());
+  public isStoryLoading: Signal<boolean> = computed(() => this.storyResource.isLoading());
+  public isStoryError: Signal<unknown> = computed(() => this.storyResource.error());
+
   constructor() { }
+
+  public loadNewStory() {
+    this.storyResource.reload();
+  }
 
   // Function to fetch the story
   private async fetchStory(request: any, abortSignal: AbortSignal): Promise<Story> {

@@ -16,4 +16,8 @@
 
 @if(step() === GameStep.GameLoop) {
   <app-adventurer-infos></app-adventurer-infos>
+
+  @if(encounter() === Encouter.Choices) {
+    <app-choices (choiceSelected)="choiceSelected($event)"></app-choices>
+  }
 }

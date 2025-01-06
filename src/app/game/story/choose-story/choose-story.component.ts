@@ -1,4 +1,13 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, output, ResourceRef} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  output,
+  ResourceRef,
+  Signal
+} from '@angular/core';
 import {Story} from '../story.class';
 import {StoryService} from '../story.service';
 
@@ -11,10 +20,19 @@ import {StoryService} from '../story.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChooseStoryComponent {
-  public story: ResourceRef<Story>;
+  public story: Signal<Story | undefined>;
+  public isLoading: Signal<boolean>;
+  public isError: Signal<unknown>;
+
   @Output() storySelected = new EventEmitter<boolean>();
 
   constructor(private storyService: StoryService) {
-    this.story = this.storyService.storyResource;
+    this.story = this.storyService.story;
+    this.isLoading = this.storyService.isStoryLoading;
+    this.isError = this.storyService.isStoryError;
+  }
+
+  public loadNewStory() {
+    this.storyService.loadNewStory();
   }
 }

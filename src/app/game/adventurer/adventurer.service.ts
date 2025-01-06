@@ -9,7 +9,6 @@ export class AdventurerService {
   private apiUrl = `${environment.api.baseUrl}/adventurer`;
 
   public adventurer : ResourceRef<Adventurer> = resource({
-    request: () => null,
     loader: async ({request, abortSignal}) => this.fetchAdventurer(request, abortSignal),
   });
 
@@ -23,7 +22,6 @@ export class AdventurerService {
     });
   }
 
-  // Function to fetch the story
   private async fetchAdventurer(request: any, abortSignal: AbortSignal): Promise<Adventurer> {
 
     console.log("generating a new Adventurer...");
