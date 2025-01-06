@@ -1,3 +1,5 @@
+import {Story} from '../story/story.class';
+
 export enum ChoiceTypeEnum {
   None = "none",
   Fight = 'Fight',
@@ -18,4 +20,9 @@ export class Choice {
     this.description = description;
     this.type = type;
   }
+}
+
+export interface GenerateChoicesDto {
+  story: Story | undefined;
+  numberOfChoices: number;
 }

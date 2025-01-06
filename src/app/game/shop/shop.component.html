@@ -1,0 +1,29 @@
+@if (isError()) {
+  error while loading the shop
+}
+
+@if (isLoading()) {
+  loading the shop...
+}
+
+@if (!isError() &&!isLoading() && shop()) {
+  <h1>{{shop()?.name}}</h1>
+
+  <p>{{shop()?.shopkeeper_description}}</p>
+
+  @for (item of shop()?.goods; track item) {
+    <div>
+      <h2>{{item.name}}</h2>
+      <p>{{item.description}}</p>
+
+      <div>Level: {{item.level}}</div>
+      <div>Cost: {{item.cost}}</div>
+      @if(isWeapon(item)) {
+        <div>Damage: {{item.damage}}</div>
+      }
+      @if (isArmor(item)) {
+        <div>Armor: {{item.defense}}</div>
+      }
+    </div>
+  }
+}

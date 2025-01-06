@@ -1,8 +1,8 @@
 import {computed, Injectable, resource, ResourceRef, signal, Signal, WritableSignal} from '@angular/core';
 import {environment} from '../../../environments/environment';
-import {Choice} from './choice.class';
-import {AdventurerService} from '../adventurer/adventurer.service';
+import {Choice, GenerateChoicesDto} from './choice.class';
 import {StoryService} from '../story/story.service';
+import {mockChoices} from '../../../mocks/choices.mock';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +36,12 @@ export class ChoiceService {
     }
 
     console.log("generating new choices...");
+    return mockChoices;
+
+    /**const generateChoicesDto: GenerateChoicesDto = {
+      story: this.storyService.story(),
+      numberOfChoices: this.numberOfChoices().nb
+    }
 
     const response = await fetch(`${this.apiUrl}/generate`, {
       signal: abortSignal,
@@ -43,13 +49,11 @@ export class ChoiceService {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        story: this.storyService.story(),
-        numberOfChoices: this.numberOfChoices().nb
-      })
+      body: JSON.stringify(generateChoicesDto)
     });
 
     if (!response.ok) throw new Error("Unable to load new choices");
-    return response.json();
+
+    return response.json();**/
   }
 }
