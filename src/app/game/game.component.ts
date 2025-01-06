@@ -1,11 +1,11 @@
 import {ChangeDetectionStrategy, Component, effect, OnInit, signal} from '@angular/core';
 import {ChooseStoryComponent} from './story/choose-story/choose-story.component';
 import {ChooseAdventurerComponent} from './adventurer/choose-adventurer/choose-adventurer.component';
-import {GameService} from './game.service';
 import {ChooseSkillComponent} from './skill/choose-skill/choose-skill.component';
 import {AdventurerInfosComponent} from './adventurer/adventurer-infos/adventurer-infos.component';
 import {Choice, ChoiceTypeEnum} from './choice/choice.class';
 import {ChoicesComponent} from './choice/choices/choices.component';
+import {ChoiceService} from './choice/choice.service';
 
 export enum GameStep {
   InitStory = 0,
@@ -35,7 +35,7 @@ export class GameComponent implements OnInit {
   protected readonly GameStep = GameStep;
   protected readonly Encouter = ChoiceTypeEnum;
 
-  constructor(private gameService: GameService) {
+  constructor(private choiceService: ChoiceService) {
     // startGameEffect
     effect(() => {
       if(this.step() === GameStep.GameLoop){
@@ -46,7 +46,7 @@ export class GameComponent implements OnInit {
     // encounterEffect
     effect(() => {
       if(this.encounter() === ChoiceTypeEnum.Choices){
-        this.gameService.generateNewChoices(3);
+        this.choiceService.generateNewChoices(3);
       }
     })
   }
