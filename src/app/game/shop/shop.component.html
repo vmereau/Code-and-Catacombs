@@ -18,11 +18,16 @@
 
       <div>Level: {{item.level}}</div>
       <div>Cost: {{item.cost}}</div>
-      @if(isWeapon(item)) {
-        <div>Damage: {{item.damage}}</div>
-      }
-      @if (isArmor(item)) {
-        <div>Armor: {{item.defense}}</div>
+      <div>Type: {{item.type}}</div>
+
+      <p>Effects: </p>
+      @for (itemEffect of item.effects; track itemEffect) {
+        <div>
+          Property: {{itemEffect.targetProperty}}<br>
+          value: {{itemEffect.value}}
+        </div>
+      } @empty {
+        <p>There are no effects for this skill. The IA is trolling.</p>
       }
     </div>
   }

@@ -1,9 +1,4 @@
-import {Armor, Item, Weapon} from '../shared/items/item.class';
-
-export enum ShopType {
-  "Armor" = "Armor",
-  "Weapons" = "Weapons"
-}
+import {Item} from '../shared/items/item.class';
 
 export class Shop {
   name: string;
@@ -17,10 +12,9 @@ export class Shop {
   }
 }
 
-export interface generateShopDto {
+export interface GenerateShopDto {
   numberOfItems: number;
   level: number;
-  type: ShopType;
-  adventurerArchetype: string;
+  adventurerArchetype: string | undefined;
 }
 

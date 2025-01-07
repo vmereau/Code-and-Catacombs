@@ -1,27 +1,34 @@
+import {Story} from '../story/story.class';
+
 export class Skill {
   name: string;
   description: string;
   cost: number;
-  effect: SkillEffect[];
+  effects: SkillEffect[];
 
   constructor(name: string, description: string, cost: number, effect: SkillEffect[]) {
     this.name = name;
     this.description = description;
     this.cost = cost;
-    this.effect = effect;
+    this.effects = effect;
   }
 }
 
 export class SkillEffect {
-  targetProperty: SKillTargetPropertyEnum;
+  targetProperty: SkillTargetPropertyEnum;
   value: number;
   targetCharacter: SkillTargetCharacterEnum;
 
-  constructor(targetProperty: SKillTargetPropertyEnum, value: number, targetCharacter: SkillTargetCharacterEnum) {
+  constructor(targetProperty: SkillTargetPropertyEnum, value: number, targetCharacter: SkillTargetCharacterEnum) {
     this.targetCharacter = targetCharacter;
     this.value = value;
     this.targetProperty = targetProperty;
   }
+}
+
+export interface GenerateSkillDto {
+  archetype: string | undefined;
+  level: number | undefined;
 }
 
 export enum SkillTargetCharacterEnum {
@@ -29,7 +36,7 @@ export enum SkillTargetCharacterEnum {
   enemy = "enemy"
 }
 
-export enum SKillTargetPropertyEnum {
+export enum SkillTargetPropertyEnum {
   health = "health",
   mana = "mana",
   attack = "attack",

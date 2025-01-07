@@ -1,6 +1,4 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, ResourceRef} from '@angular/core';
-import {Adventurer} from '../../adventurer/adventurer.class';
-import {AdventurerService} from '../../adventurer/adventurer.service';
 import {SkillService} from '../skill.service';
 import {Skill} from '../skill.class';
 

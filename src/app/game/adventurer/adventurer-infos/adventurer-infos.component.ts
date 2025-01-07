@@ -19,9 +19,9 @@ import {AdventurerService} from '../adventurer.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdventurerInfosComponent {
-  public adventurer: Adventurer | undefined;
+  public adventurer: WritableSignal<Adventurer | undefined>;
 
   constructor(private adventurerService: AdventurerService) {
-    this.adventurer = this.adventurerService.adventurer.value();
+    this.adventurer = this.adventurerService.adventurer;
   }
 }

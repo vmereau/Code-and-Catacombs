@@ -1,6 +1,7 @@
 import {computed, Injectable, resource, Signal} from '@angular/core';
 import {environment} from '../../../environments/environment';
-import {generateShopDto, Shop, ShopType} from './shop.class';
+import {GenerateShopDto, Shop} from './shop.class';
+import {AdventurerService} from '../adventurer/adventurer.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class ShopService {
   public isShopLoading: Signal<boolean> = computed(() => this.shopResource.isLoading());
   public isShopError: Signal<unknown> = computed(() => this.shopResource.error());
 
-  constructor() { }
+  constructor(private adventurerService: AdventurerService) { }
 
   public loadNewShop() {
     this.shopResource.reload();
@@ -26,9 +27,8 @@ export class ShopService {
 
     console.log("generating a new shop...");
 
-    const generateShopDto: generateShopDto = {
-      adventurerArchetype: "swordsman",
-      type: ShopType.Armor,
+    const generateShopDto: GenerateShopDto = {
+      adventurerArchetype: this.adventurerService.adventurer()?.archetype,
       level: 1,
       numberOfItems: 3
     }

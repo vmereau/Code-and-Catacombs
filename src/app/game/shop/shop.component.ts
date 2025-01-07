@@ -1,9 +1,6 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Output, Signal} from '@angular/core';
-import {Story} from '../story/story.class';
-import {StoryService} from '../story/story.service';
+import {ChangeDetectionStrategy, Component, Signal} from '@angular/core';
 import {ShopService} from './shop.service';
 import {Shop} from './shop.class';
-import {Armor, Item, Weapon} from '../shared/items/item.class';
 
 @Component({
   selector: 'app-shop',
@@ -14,8 +11,6 @@ import {Armor, Item, Weapon} from '../shared/items/item.class';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShopComponent {
-  protected readonly Armor = Armor;
-  protected readonly Weapon = Weapon;
 
   public shop: Signal<Shop | undefined>;
   public isLoading: Signal<boolean>;
@@ -29,13 +24,5 @@ export class ShopComponent {
 
   public loadNewShop() {
     this.shopService.loadNewShop();
-  }
-
-  public isWeapon(item: Item): boolean {
-    return item instanceof Weapon;
-  }
-
-  public isArmor(item: Item): boolean {
-    return item instanceof Armor;
   }
 }
