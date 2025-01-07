@@ -1,15 +1,15 @@
 <div>
-  <span>Name: {{adventurer?.name}}</span>
-  <span>Archetype: {{adventurer?.archetype}}</span>
-  <span>Level: {{adventurer?.level}}</span>
+  <span>Name: {{adventurer()?.name}}</span>
+  <span>Archetype: {{adventurer()?.archetype}}</span>
+  <span>Level: {{adventurer()?.level}}</span>
 </div>
 ---
 <div>
-  <span>Health: {{adventurer?.currentHealth}} / {{adventurer?.health}}</span>
-  <span>Mana: {{adventurer?.currentMana}} / {{adventurer?.mana}}</span>
+  <span>Health: {{adventurer()?.currentHealth}} / {{adventurer()?.health}}</span>
+  <span>Mana: {{adventurer()?.currentMana}} / {{adventurer()?.mana}}</span>
 </div>
 ---
 <div>
-  <span>Defense: {{adventurer?.defense}}</span>
-  <span>Attack: {{adventurer?.attack}}</span>
+  <span>Defense: {{adventurer()?.defense}}</span>
+  <span>Attack: {{adventurer()?.attack}}</span>
 </div>

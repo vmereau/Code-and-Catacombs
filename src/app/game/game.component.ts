@@ -6,6 +6,7 @@ import {AdventurerInfosComponent} from './adventurer/adventurer-infos/adventurer
 import {Choice, ChoiceTypeEnum} from './choice/choice.class';
 import {ChoicesComponent} from './choice/choices/choices.component';
 import {ChoiceService} from './choice/choice.service';
+import {ShopComponent} from './shop/shop.component';
 
 export enum GameStep {
   InitStory = 0,
@@ -21,7 +22,8 @@ export enum GameStep {
     ChooseAdventurerComponent,
     ChooseSkillComponent,
     AdventurerInfosComponent,
-    ChoicesComponent
+    ChoicesComponent,
+    ShopComponent
   ],
   templateUrl: './game.component.html',
   standalone: true,

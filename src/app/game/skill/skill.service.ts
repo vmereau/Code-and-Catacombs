@@ -1,6 +1,6 @@
 import {Injectable, resource, signal} from '@angular/core';
 import {environment} from '../../../environments/environment';
-import {Skill} from './skill.class';
+import {GenerateSkillDto, Skill} from './skill.class';
 import {AdventurerService} from '../adventurer/adventurer.service';
 
 @Injectable({
@@ -21,13 +21,15 @@ export class SkillService {
   private async fetchSkill(request: any, abortSignal: AbortSignal): Promise<Skill> {
     console.log("generating a new Skill...");
 
+    const generateSkillDto: GenerateSkillDto = {
+      archetype: this.adventurerService.adventurer()?.archetype,
+      level: this.adventurerService.adventurer()?.level
+    }
+
     const response = await fetch(`${this.apiUrl}/generate`, {
       signal: abortSignal,
       method: "POST",
-      body: JSON.stringify({
-        archetype: this.adventurerService.adventurer.value()?.archetype,
-        level: this.adventurerService.adventurer.value()?.level
-      })
+      body: JSON.stringify(generateSkillDto)
     });
 
     if (!response.ok) throw new Error("Unable to load new skill");

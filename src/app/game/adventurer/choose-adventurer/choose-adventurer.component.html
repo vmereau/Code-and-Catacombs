@@ -1,23 +1,23 @@
-@if(adventurer.error()){
+@if(isError()){
   <p>An error happened</p>
 }
 
-@if(adventurer.isLoading()) {
+@if(isLoading()) {
   <p>Adventurer is generating, please wait</p>
 }
 
-@if (adventurer.hasValue() && !adventurer.isLoading() && !adventurer.error()) {
-  <h2>{{adventurer.value()?.name}}</h2>
+@if (adventurer() && !isLoading() && !isError()) {
+  <h2>{{adventurer()?.name}}</h2>
   <br>
-  <p>{{adventurer.value()?.description}}</p>
+  <p>{{adventurer()?.description}}</p>
   <br>
-  <span>Archetype: {{adventurer.value()?.archetype}} (level {{adventurer.value()?.level}})</span><br>
-  <span>Health: {{adventurer.value()?.health}}</span><br>
-  <span>Defense: {{adventurer.value()?.defense}}</span><br>
-  <span>Attack: {{adventurer.value()?.attack}}</span><br>
-  <span>Mana: {{adventurer.value()?.mana}}</span><br>
+  <span>Archetype: {{adventurer()?.archetype}} (level {{adventurer()?.level}})</span><br>
+  <span>Health: {{adventurer()?.health}}</span><br>
+  <span>Defense: {{adventurer()?.defense}}</span><br>
+  <span>Attack: {{adventurer()?.attack}}</span><br>
+  <span>Mana: {{adventurer()?.mana}}</span><br>
 
-  <button (click)="adventurer.reload()">Generate a new adventurer</button>
+  <button (click)="loadNewAdventurer()">Generate a new adventurer</button>
   <button (click)="chooseAdventurer()">Choose this adventurer</button>
 }
 
