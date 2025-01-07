@@ -36,12 +36,14 @@ export class AdventurerService {
     this.adventurer.update((adventurer) => {
       if(!adventurer) return undefined;
 
-      return { ...adventurer, currentMana: adventurer.mana, currentHealth: adventurer.health, gold: 50};
+      return { ...adventurer, currentMana: adventurer.mana, currentHealth: adventurer.health, gold: 100};
     });
   }
 
   public addToInventory(item: Item): void {
-    this.inventory().push(item);
+    this.inventory.update(inventory => {
+      return [...inventory, item];
+    })
   }
 
   public withdrawGold(amount: number): void {

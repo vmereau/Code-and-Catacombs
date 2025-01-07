@@ -17,3 +17,28 @@
 <div>
   <span>Gold: {{adventurer()?.gold}}</span>
 </div>
+
+<p-button (click)="toggleEquipment()">Open equipment</p-button>
+
+<p-dialog header="Equipment" [modal]="true" [(visible)]="equipmentVisible" [style]="{ width: '25rem' }">
+  @if (equipment().length === 0) {
+    No equipment
+  } @else {
+    @for (equipment of equipment(); track equipment) {
+      <div>
+        <span>Name: {{equipment.name}}</span>
+        <span>level:{{equipment.level}}</span>
+        --
+        <span>{{equipment.description}}</span>
+        --
+        <div>
+          Effects:
+          @for (effect of equipment.effects; track effect) {
+            <span>{{effect.targetProperty}}: {{effect.value}}</span>
+          }
+        </div>
+      </div>
+    }
+  }
+  <p-button label="Close" (click)="toggleEquipment()" />
+</p-dialog>
