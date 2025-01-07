@@ -6,6 +6,7 @@ export class Adventurer extends Character {
   // Front Only
   currentHealth: number = 0;
   currentMana: number = 0;
+  gold: number = 0;
 
   constructor(name: string, level: number, description: string, health: number, attack: number, mana: number, defense: number, archetype: string) {
     super(name, level, description, health, attack, mana, defense);
@@ -13,5 +14,6 @@ export class Adventurer extends Character {
     this.archetype = archetype;
     this.currentHealth = health;
     this.currentMana = mana;
+    this.gold = 0;
   }
 }

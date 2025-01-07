@@ -1,6 +1,7 @@
 import {computed, Injectable, linkedSignal, resource, ResourceRef, Signal, signal, WritableSignal} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {Adventurer} from './adventurer.class';
+import {Item, ItemTypeEnum} from '../shared/items/item.class';
 
 @Injectable({
   providedIn: 'root'
@@ -16,18 +17,63 @@ export class AdventurerService {
   public isAdventurerLoading: Signal<boolean> = computed(() => this.adventurerResource.isLoading());
   public isAdventurerError: Signal<unknown> = computed(() => this.adventurerResource.error());
 
+  private inventory: WritableSignal<Item[]> = signal([]);
+
+  public equipment: Signal<Item[]>= computed(() => {
+    return this.inventory().filter(item => item.type === ItemTypeEnum.equipment);
+  })
+  public consumables: Signal<Item[]> = computed(() => {
+    return this.inventory().filter(item => item.type === ItemTypeEnum.consumable);
+  })
+
   constructor() {}
 
   public loadNewAdventurer() {
     this.adventurerResource.reload();
   }
 
-  public setMaxHealthAndMana() {
+  public setInitialValues(): void {
     this.adventurer.update((adventurer) => {
       if(!adventurer) return undefined;
 
-      return { ...adventurer, currentMana: adventurer.mana, currentHealth: adventurer.health};
+      return { ...adventurer, currentMana: adventurer.mana, currentHealth: adventurer.health, gold: 50};
     });
+  }
+
+  public addToInventory(item: Item): void {
+    this.inventory().push(item);
+  }
+
+  public withdrawGold(amount: number): void {
+    if(amount < 0){
+      throw new Error("Amount must be positive");
+    }
+
+    this.adventurer.update(adventurer => {
+      if(!adventurer) throw new Error("Adventurer undefined");
+
+      if(!adventurer.gold){
+        adventurer.gold = 0;
+      }
+
+      return { ...adventurer, gold: adventurer.gold - amount }
+    })
+  }
+
+  public addGold(amount: number): void {
+    if(amount < 0){
+      throw new Error("Amount must be positive");
+    }
+
+    this.adventurer.update(adventurer => {
+      if(!adventurer) throw new Error("Adventurer undefined");
+
+      if(!adventurer.gold){
+        adventurer.gold = 0;
+      }
+
+      return { ...adventurer, gold: adventurer.gold + amount }
+    })
   }
 
   private async fetchAdventurer(request: any, abortSignal: AbortSignal): Promise<Adventurer> {

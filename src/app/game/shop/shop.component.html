@@ -29,6 +29,8 @@
       } @empty {
         <p>There are no effects for this skill. The IA is trolling.</p>
       }
+
+      <button (click)="buy(item)" [disabled]="!canBuy(item.cost)">Buy</button>
     </div>
   }
 }

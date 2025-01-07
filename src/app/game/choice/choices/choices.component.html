@@ -3,7 +3,7 @@
 }
 
 @if(isLoading()){
-  Chargement des choix...
+  Loading choices...
 }
 
 @if (!isLoading() && !isError() && choices()) {
@@ -12,5 +12,4 @@
       <app-choice-selection [choice]="choice" (choiceSelected)="choiceSelected.emit($event)"></app-choice-selection>
     }
   </div>
-
 }

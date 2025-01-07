@@ -35,6 +35,6 @@ export enum ItemTargetPropertyEnum {
 }
 
 export enum ItemTypeEnum {
-  permanent = "permanent",
+  equipment = "equipment",
   consumable = "consumable"
 }

@@ -32,7 +32,7 @@ export class ChooseAdventurerComponent {
   }
 
   public chooseAdventurer() {
-    this.adventurerService.setMaxHealthAndMana();
+    this.adventurerService.setInitialValues();
     this.adventurerSelected.emit(true);
   }
 
