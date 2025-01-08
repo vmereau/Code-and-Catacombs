@@ -24,7 +24,7 @@
   @if (equipment().length === 0) {
     No equipment
   } @else {
-    @for (equipment of equipment(); track equipment) {
+    @for (equipment of equipment(); track $index) {
       <div>
         <span>Name: {{equipment.name}}</span>
         <span>level:{{equipment.level}}</span>
@@ -33,7 +33,7 @@
         --
         <div>
           Effects:
-          @for (effect of equipment.effects; track effect) {
+          @for (effect of equipment.effects; track $index) {
             <span>{{effect.targetProperty}}: {{effect.value}}</span>
           }
         </div>

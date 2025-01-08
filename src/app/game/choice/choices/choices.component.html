@@ -8,7 +8,7 @@
 
 @if (!isLoading() && !isError() && choices()) {
   <div class="choices-selection">
-    @for (choice of choices(); track choice) {
+    @for (choice of choices(); track $index) {
       <app-choice-selection [choice]="choice" (choiceSelected)="choiceSelected.emit($event)"></app-choice-selection>
     }
   </div>

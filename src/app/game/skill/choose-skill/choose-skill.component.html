@@ -13,7 +13,7 @@
   <p>Mana cost: {{skill.value()?.cost}}</p>
 
   <p>Effects: </p>
-  @for (skillEffect of skill.value()?.effects; track skillEffect) {
+  @for (skillEffect of skill.value()?.effects; track $index) {
     <div>
       Cible: {{skillEffect.targetCharacter}}, {{skillEffect.targetProperty}}<br>
       valeur: {{skillEffect.value}}

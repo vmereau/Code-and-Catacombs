@@ -11,7 +11,7 @@
 
   <p>{{shop()?.shopkeeper_description}}</p>
 
-  @for (item of shop()?.goods; track item) {
+  @for (item of shop()?.goods; track $index) {
     <div>
       <h2>{{item.name}}</h2>
       <p>{{item.description}}</p>
@@ -21,7 +21,7 @@
       <div>Type: {{item.type}}</div>
 
       <p>Effects: </p>
-      @for (itemEffect of item.effects; track itemEffect) {
+      @for (itemEffect of item.effects; track $index) {
         <div>
           Property: {{itemEffect.targetProperty}}<br>
           value: {{itemEffect.value}}
