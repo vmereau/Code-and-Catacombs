@@ -2,6 +2,7 @@ import {computed, Injectable, linkedSignal, resource, ResourceRef, Signal, signa
 import {environment} from '../../../environments/environment';
 import {Adventurer} from './adventurer.class';
 import {Item, ItemTypeEnum} from '../shared/items/item.class';
+import {CharacterUpdatableNumberProperties} from '../shared/character/character.class';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +41,24 @@ export class AdventurerService {
     });
   }
 
+  public updateStats(property: CharacterUpdatableNumberProperties, value: number) {
+    this.adventurer.update(adventurer => {
+      if(!adventurer) return undefined;
+
+      adventurer[property] += value;
+
+      return {...adventurer};
+    })
+  }
+
   public addToInventory(item: Item): void {
+
+    if(item.type === ItemTypeEnum.equipment) {
+      item.effects.forEach(effect => {
+        this.updateStats(effect.targetProperty, effect.value);
+      })
+    }
+
     this.inventory.update(inventory => {
       return [...inventory, item];
     })

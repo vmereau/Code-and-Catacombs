@@ -8,12 +8,12 @@ import {AdventurerService} from '../adventurer.service';
 import {Item} from '../../shared/items/item.class';
 import {Dialog} from 'primeng/dialog';
 import {Button} from 'primeng/button';
+import {ShowInventoryComponent} from './show-inventory/show-inventory.component';
 
 @Component({
   selector: 'app-adventurer-infos',
   imports: [
-    Dialog,
-    Button
+    ShowInventoryComponent
   ],
   templateUrl: './adventurer-infos.component.html',
   standalone: true,
@@ -25,16 +25,9 @@ export class AdventurerInfosComponent {
   public equipment: Signal<Item[]>;
   public consumables: Signal<Item[]>;
 
-  public equipmentVisible: boolean = false;
-  public consumablesVisible: boolean = false;
-
   constructor(private adventurerService: AdventurerService) {
     this.adventurer = this.adventurerService.adventurer;
     this.equipment = this.adventurerService.equipment;
     this.consumables = this.adventurerService.consumables;
-  }
-
-  public toggleEquipment(): void {
-    this.equipmentVisible = !this.equipmentVisible;
   }
 }

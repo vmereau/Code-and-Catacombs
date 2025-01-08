@@ -1,3 +1,4 @@
+import {CharacterUpdatableNumberProperties} from '../character/character.class';
 
 export class Item {
   name: string;
@@ -18,20 +19,13 @@ export class Item {
 }
 
 export class ItemEffect {
-  targetProperty: ItemTargetPropertyEnum;
+  targetProperty: CharacterUpdatableNumberProperties;
   value: number;
 
-  constructor(targetProperty: ItemTargetPropertyEnum, value: number) {
+  constructor(targetProperty: CharacterUpdatableNumberProperties, value: number) {
     this.targetProperty =  targetProperty;
     this.value = value;
   }
-}
-
-export enum ItemTargetPropertyEnum {
-  health = 'health',
-  mana = 'mana',
-  attack = 'attack',
-  defense = 'defense',
 }
 
 export enum ItemTypeEnum {

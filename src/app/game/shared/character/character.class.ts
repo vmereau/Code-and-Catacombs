@@ -22,3 +22,10 @@ export class Character {
     this.defense = defense;
   }
 }
+
+export enum CharacterUpdatableNumberProperties {
+  health = "health",
+  mana = "mana",
+  attack = "attack",
+  defense = "defense"
+}

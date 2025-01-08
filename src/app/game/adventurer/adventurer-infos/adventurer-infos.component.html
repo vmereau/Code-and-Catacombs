@@ -18,27 +18,8 @@
   <span>Gold: {{adventurer()?.gold}}</span>
 </div>
 
-<p-button (click)="toggleEquipment()">Open equipment</p-button>
+<div>
+  <app-show-inventory [inventory]="equipment" [inventoryName]="'Equipment'"></app-show-inventory>
+  <app-show-inventory [inventory]="consumables" [inventoryName]="'Consumables'"></app-show-inventory>
+</div>
 
-<p-dialog header="Equipment" [modal]="true" [(visible)]="equipmentVisible" [style]="{ width: '25rem' }">
-  @if (equipment().length === 0) {
-    No equipment
-  } @else {
-    @for (equipment of equipment(); track $index) {
-      <div>
-        <span>Name: {{equipment.name}}</span>
-        <span>level:{{equipment.level}}</span>
-        --
-        <span>{{equipment.description}}</span>
-        --
-        <div>
-          Effects:
-          @for (effect of equipment.effects; track $index) {
-            <span>{{effect.targetProperty}}: {{effect.value}}</span>
-          }
-        </div>
-      </div>
-    }
-  }
-  <p-button label="Close" (click)="toggleEquipment()" />
-</p-dialog>
