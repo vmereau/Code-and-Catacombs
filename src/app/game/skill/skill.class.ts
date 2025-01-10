@@ -1,4 +1,4 @@
-import {CharacterUpdatableNumberProperties} from '../shared/character/character.class';
+import { CharacterUpdatableNumberProperties } from '../shared/character/character.class';
 
 export class Skill {
   name: string;
@@ -19,7 +19,11 @@ export class SkillEffect {
   value: number;
   targetCharacter: SkillTargetCharacterEnum;
 
-  constructor(targetProperty: CharacterUpdatableNumberProperties, value: number, targetCharacter: SkillTargetCharacterEnum) {
+  constructor(
+    targetProperty: CharacterUpdatableNumberProperties,
+    value: number,
+    targetCharacter: SkillTargetCharacterEnum,
+  ) {
     this.targetCharacter = targetCharacter;
     this.value = value;
     this.targetProperty = targetProperty;
@@ -32,6 +36,6 @@ export interface GenerateSkillDto {
 }
 
 export enum SkillTargetCharacterEnum {
-  self = "self",
-  enemy = "enemy"
+  self = 'self',
+  enemy = 'enemy',
 }

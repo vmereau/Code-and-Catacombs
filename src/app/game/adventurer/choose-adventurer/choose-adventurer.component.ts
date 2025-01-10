@@ -1,14 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  ResourceRef, Signal,
-  WritableSignal
-} from '@angular/core';
-import {Adventurer} from '../adventurer.class';
-import {AdventurerService} from '../adventurer.service';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output, Signal, WritableSignal } from '@angular/core';
+import { Adventurer } from '../adventurer.class';
+import { AdventurerService } from '../adventurer.service';
 
 @Component({
   selector: 'app-choose-adventurer',
@@ -16,7 +8,7 @@ import {AdventurerService} from '../adventurer.service';
   templateUrl: './choose-adventurer.component.html',
   standalone: true,
   styleUrl: './choose-adventurer.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChooseAdventurerComponent {
   public adventurer: WritableSignal<Adventurer | undefined>;

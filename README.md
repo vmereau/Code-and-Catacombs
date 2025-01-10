@@ -1,6 +1,6 @@
 # CodeAndCatacombs
 
-Web application using [RPG-Generator's](https://github.com/vmereau/rpg-generator) 
+Web application using [RPG-Generator's](https://github.com/vmereau/rpg-generator)
 capabilities to generate an adventure using Angular latest updates ( Signals and Resource API )
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.

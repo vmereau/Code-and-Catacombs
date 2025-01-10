@@ -1,24 +1,29 @@
-<p-button (click)="toggleInventoryVisibility()">Open {{inventoryName}}</p-button>
+<p-button (click)="toggleInventoryVisibility()"
+  >Open {{ inventoryName }}</p-button
+>
 
-<p-dialog [header]="inventoryName" [modal]="true" [(visible)]="inventoryVisible" [style]="{ width: '25rem' }">
-  @if (inventory().length === 0) {
-    Nothing there !
-  } @else {
-    @for (equipment of inventory(); track $index) {
+<p-dialog
+  [header]="inventoryName"
+  [modal]="true"
+  [(visible)]="inventoryVisible"
+  [style]="{ width: '25rem' }"
+>
+  @for (equipment of inventory(); track $index) {
+    <div>
+      <span>Name: {{ equipment.name }}</span>
+      <span>level:{{ equipment.level }}</span>
+      --
+      <span>{{ equipment.description }}</span>
+      --
       <div>
-        <span>Name: {{equipment.name}}</span>
-        <span>level:{{equipment.level}}</span>
-        --
-        <span>{{equipment.description}}</span>
-        --
-        <div>
-          Effects:
-          @for (effect of equipment.effects; track $index) {
-            <span>{{effect.targetProperty}}: {{effect.value}}</span>
-          }
-        </div>
+        Effects:
+        @for (effect of equipment.effects; track $index) {
+          <span>{{ effect.targetProperty }}: {{ effect.value }}</span>
+        }
       </div>
-    }
+    </div>
+  } @empty {
+    Nothing there !
   }
   <p-button label="Close" (click)="toggleInventoryVisibility()" />
 </p-dialog>

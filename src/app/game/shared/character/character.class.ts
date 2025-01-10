@@ -1,5 +1,4 @@
-import {Skill} from '../../skill/skill.class';
-
+import { Skill } from '../../skill/skill.class';
 
 export class Character {
   name: string;
@@ -12,7 +11,15 @@ export class Character {
   skills?: Skill[];
   picture?: string;
 
-  constructor(name: string, level: number, description: string, health: number, attack: number, mana: number, defense: number) {
+  constructor(
+    name: string,
+    level: number,
+    description: string,
+    health: number,
+    attack: number,
+    mana: number,
+    defense: number,
+  ) {
     this.name = name;
     this.level = level;
     this.description = description;
@@ -24,8 +31,8 @@ export class Character {
 }
 
 export enum CharacterUpdatableNumberProperties {
-  health = "health",
-  mana = "mana",
-  attack = "attack",
-  defense = "defense"
+  health = 'health',
+  mana = 'mana',
+  attack = 'attack',
+  defense = 'defense',
 }

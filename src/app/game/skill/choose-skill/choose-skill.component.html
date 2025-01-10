@@ -1,22 +1,23 @@
-@if(skill.error()){
+@if (skill.error()) {
   <p>An error happened</p>
 }
 
-@if(skill.isLoading()) {
+@if (skill.isLoading()) {
   <p>The skill is generating, please wait</p>
 }
 
 @if (skill.hasValue() && !skill.isLoading() && !skill.error()) {
-  <h2>{{skill.value()?.name}}</h2>
+  <h2>{{ skill.value()?.name }}</h2>
 
-  <p>{{skill.value()?.description}}</p>
-  <p>Mana cost: {{skill.value()?.cost}}</p>
+  <p>{{ skill.value()?.description }}</p>
+  <p>Mana cost: {{ skill.value()?.cost }}</p>
 
-  <p>Effects: </p>
+  <p>Effects:</p>
   @for (skillEffect of skill.value()?.effects; track $index) {
     <div>
-      Cible: {{skillEffect.targetCharacter}}, {{skillEffect.targetProperty}}<br>
-      valeur: {{skillEffect.value}}
+      Cible: {{ skillEffect.targetCharacter }}, {{ skillEffect.targetProperty
+      }}<br />
+      valeur: {{ skillEffect.value }}
     </div>
   } @empty {
     <p>There are no effects for this skill. The IA is trolling.</p>
@@ -25,6 +26,3 @@
   <button (click)="skill.reload()">Generate a new skill</button>
   <button (click)="selectSkill()">Choose this skill</button>
 }
-
-
-

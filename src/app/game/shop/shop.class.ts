@@ -1,4 +1,4 @@
-import {Item} from '../shared/items/item.class';
+import { Item } from '../shared/items/item.class';
 
 export class Shop {
   name: string;
@@ -17,4 +17,3 @@ export interface GenerateShopDto {
   level: number;
   adventurerArchetype: string | undefined;
 }
-

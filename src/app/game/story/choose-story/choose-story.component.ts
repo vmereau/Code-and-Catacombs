@@ -1,15 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  output,
-  ResourceRef,
-  Signal
-} from '@angular/core';
-import {Story} from '../story.class';
-import {StoryService} from '../story.service';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output, Signal } from '@angular/core';
+import { Story } from '../story.class';
+import { StoryService } from '../story.service';
 
 @Component({
   selector: 'app-story',
@@ -17,7 +8,7 @@ import {StoryService} from '../story.service';
   templateUrl: './choose-story.component.html',
   standalone: true,
   styleUrl: './choose-story.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChooseStoryComponent {
   public story: Signal<Story | undefined>;

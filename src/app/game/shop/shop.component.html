@@ -6,25 +6,25 @@
   loading the shop...
 }
 
-@if (!isError() &&!isLoading() && shop()) {
-  <h1>{{shop()?.name}}</h1>
+@if (!isError() && !isLoading() && shop()) {
+  <h1>{{ shop()?.name }}</h1>
 
-  <p>{{shop()?.shopkeeper_description}}</p>
+  <p>{{ shop()?.shopkeeper_description }}</p>
 
   @for (item of shop()?.goods; track $index) {
     <div>
-      <h2>{{item.name}}</h2>
-      <p>{{item.description}}</p>
+      <h2>{{ item.name }}</h2>
+      <p>{{ item.description }}</p>
 
-      <div>Level: {{item.level}}</div>
-      <div>Cost: {{item.cost}}</div>
-      <div>Type: {{item.type}}</div>
+      <div>Level: {{ item.level }}</div>
+      <div>Cost: {{ item.cost }}</div>
+      <div>Type: {{ item.type }}</div>
 
-      <p>Effects: </p>
+      <p>Effects:</p>
       @for (itemEffect of item.effects; track $index) {
         <div>
-          Property: {{itemEffect.targetProperty}}<br>
-          value: {{itemEffect.value}}
+          Property: {{ itemEffect.targetProperty }}<br />
+          value: {{ itemEffect.value }}
         </div>
       } @empty {
         <p>There are no effects for this skill. The IA is trolling.</p>

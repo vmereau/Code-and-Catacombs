@@ -1,15 +1,18 @@
-@if(isError()){
+@if (isError()) {
   <p>An error happened</p>
 }
 
-@if(isLoading()){
+@if (isLoading()) {
   Loading choices...
 }
 
 @if (!isLoading() && !isError() && choices()) {
   <div class="choices-selection">
     @for (choice of choices(); track $index) {
-      <app-choice-selection [choice]="choice" (choiceSelected)="choiceSelected.emit($event)"></app-choice-selection>
+      <app-choice-selection
+        [choice]="choice"
+        (choiceSelected)="choiceSelected.emit($event)"
+      ></app-choice-selection>
     }
   </div>
 }

@@ -1,7 +1,7 @@
-import {Story} from '../story/story.class';
+import { Story } from '../story/story.class';
 
 export enum ChoiceTypeEnum {
-  None = "none",
+  None = 'none',
   Fight = 'Fight',
   Elite_fight = 'Elite_fight',
   Treasure = 'Treasure', // Strong item

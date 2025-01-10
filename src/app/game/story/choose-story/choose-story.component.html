@@ -1,23 +1,20 @@
-@if(isError()){
+@if (isError()) {
   <p>An error happened</p>
 }
 
-@if(isLoading()) {
+@if (isLoading()) {
   <p>Story is generating, please wait</p>
 }
 
 @if (!isLoading() && !isError() && story()) {
-  <h2>{{story()?.name}}</h2>
-  <br>
-  <p>Biome: {{story()?.biome}}</p>
-  <br>
-  <p>{{story()?.story_summary}}</p>
-  <br>
-  <p>Boss: {{story()?.boss_name}}</p>
+  <h2>{{ story()?.name }}</h2>
+  <br />
+  <p>Biome: {{ story()?.biome }}</p>
+  <br />
+  <p>{{ story()?.story_summary }}</p>
+  <br />
+  <p>Boss: {{ story()?.boss_name }}</p>
 
   <button (click)="loadNewStory()">Generate a new story</button>
   <button (click)="storySelected.emit(true)">Choose this story</button>
 }
-
-
-

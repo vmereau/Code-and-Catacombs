@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, ResourceRef} from '@angular/core';
-import {SkillService} from '../skill.service';
-import {Skill} from '../skill.class';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output, ResourceRef } from '@angular/core';
+import { Skill } from '../skill.class';
+import { SkillService } from '../skill.service';
 
 @Component({
   selector: 'app-choose-skill',
@@ -8,7 +8,7 @@ import {Skill} from '../skill.class';
   templateUrl: './choose-skill.component.html',
   standalone: true,
   styleUrl: './choose-skill.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChooseSkillComponent {
   public skill: ResourceRef<Skill>;
@@ -20,12 +20,11 @@ export class ChooseSkillComponent {
   }
 
   public selectSkill(): void {
-    this.skillService.adventurerSkills.update(skills => {
-      skills.push(<Skill>this.skill.value());
+    this.skillService.adventurerSkills.update((skills) => {
+      skills.push((this.skill.value() as Skill));
       return skills;
     });
 
     this.skillSelected.emit(true);
   }
-
 }

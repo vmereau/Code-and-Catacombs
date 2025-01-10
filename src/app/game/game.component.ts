@@ -1,18 +1,18 @@
-import {ChangeDetectionStrategy, Component, effect, OnInit, signal} from '@angular/core';
-import {ChooseStoryComponent} from './story/choose-story/choose-story.component';
-import {ChooseAdventurerComponent} from './adventurer/choose-adventurer/choose-adventurer.component';
-import {ChooseSkillComponent} from './skill/choose-skill/choose-skill.component';
-import {AdventurerInfosComponent} from './adventurer/adventurer-infos/adventurer-infos.component';
-import {Choice, ChoiceTypeEnum} from './choice/choice.class';
-import {ChoicesComponent} from './choice/choices/choices.component';
-import {ChoiceService} from './choice/choice.service';
-import {ShopComponent} from './shop/shop.component';
+import { ChangeDetectionStrategy, Component, effect, signal } from '@angular/core';
+import { AdventurerInfosComponent } from './adventurer/adventurer-infos/adventurer-infos.component';
+import { ChooseAdventurerComponent } from './adventurer/choose-adventurer/choose-adventurer.component';
+import { Choice, ChoiceTypeEnum } from './choice/choice.class';
+import { ChoiceService } from './choice/choice.service';
+import { ChoicesComponent } from './choice/choices/choices.component';
+import { ShopComponent } from './shop/shop.component';
+import { ChooseSkillComponent } from './skill/choose-skill/choose-skill.component';
+import { ChooseStoryComponent } from './story/choose-story/choose-story.component';
 
 export enum GameStep {
   InitStory = 0,
   InitAdventurer = 1,
   InitSkills = 2,
-  GameLoop = 3
+  GameLoop = 3,
 }
 
 @Component({
@@ -23,14 +23,14 @@ export enum GameStep {
     ChooseSkillComponent,
     AdventurerInfosComponent,
     ChoicesComponent,
-    ShopComponent
+    ShopComponent,
   ],
   templateUrl: './game.component.html',
   standalone: true,
   styleUrl: './game.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GameComponent implements OnInit {
+export class GameComponent {
   public step = signal(GameStep.InitStory);
   public encounter = signal(ChoiceTypeEnum.None);
 
@@ -40,20 +40,18 @@ export class GameComponent implements OnInit {
   constructor(private choiceService: ChoiceService) {
     // startGameEffect
     effect(() => {
-      if(this.step() === GameStep.GameLoop){
+      if (this.step() === GameStep.GameLoop) {
         this.encounter.set(ChoiceTypeEnum.Choices);
       }
-    })
+    });
 
     // encounterEffect
     effect(() => {
-      if(this.encounter() === ChoiceTypeEnum.Choices){
+      if (this.encounter() === ChoiceTypeEnum.Choices) {
         this.choiceService.generateNewChoices(3);
       }
-    })
+    });
   }
-
-  ngOnInit() {}
 
   public startGame(): void {
     this.step.set(GameStep.GameLoop);

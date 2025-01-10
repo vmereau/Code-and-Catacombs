@@ -1,8 +1,8 @@
-import {ChangeDetectionStrategy, Component, Signal} from '@angular/core';
-import {ShopService} from './shop.service';
-import {Shop} from './shop.class';
-import {AdventurerService} from '../adventurer/adventurer.service';
-import {Item} from '../shared/items/item.class';
+import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
+import { AdventurerService } from '../adventurer/adventurer.service';
+import { Item } from '../shared/items/item.class';
+import { Shop } from './shop.class';
+import { ShopService } from './shop.service';
 
 @Component({
   selector: 'app-shop',
@@ -10,16 +10,17 @@ import {Item} from '../shared/items/item.class';
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.scss',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShopComponent {
   public shop: Signal<Shop | undefined>;
   public isLoading: Signal<boolean>;
   public isError: Signal<unknown>;
 
-
-  constructor(private shopService: ShopService,
-              private adventurerService: AdventurerService) {
+  constructor(
+    private shopService: ShopService,
+    private adventurerService: AdventurerService,
+  ) {
     this.shop = this.shopService.shop;
     this.isLoading = this.shopService.isShopLoading;
     this.isError = this.shopService.isShopError;
@@ -30,7 +31,7 @@ export class ShopComponent {
   }
 
   public buy(item: Item): boolean {
-    if(!this.canBuy(item.cost)) {
+    if (!this.canBuy(item.cost)) {
       return false;
     }
 

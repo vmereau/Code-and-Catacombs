@@ -1,24 +1,16 @@
-import {
-  ChangeDetectionStrategy,
-  Component, signal, Signal,
-  WritableSignal
-} from '@angular/core';
-import {Adventurer} from '../adventurer.class';
-import {AdventurerService} from '../adventurer.service';
-import {Item} from '../../shared/items/item.class';
-import {Dialog} from 'primeng/dialog';
-import {Button} from 'primeng/button';
-import {ShowInventoryComponent} from './show-inventory/show-inventory.component';
+import { ChangeDetectionStrategy, Component, Signal, WritableSignal } from '@angular/core';
+import { Item } from '../../shared/items/item.class';
+import { Adventurer } from '../adventurer.class';
+import { AdventurerService } from '../adventurer.service';
+import { ShowInventoryComponent } from './show-inventory/show-inventory.component';
 
 @Component({
   selector: 'app-adventurer-infos',
-  imports: [
-    ShowInventoryComponent
-  ],
+  imports: [ShowInventoryComponent],
   templateUrl: './adventurer-infos.component.html',
   standalone: true,
   styleUrl: './adventurer-infos.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdventurerInfosComponent {
   public adventurer: WritableSignal<Adventurer | undefined>;

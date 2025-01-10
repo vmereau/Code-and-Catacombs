@@ -1,19 +1,19 @@
-import {computed, Injectable, resource, ResourceRef, signal, Signal, WritableSignal} from '@angular/core';
-import {environment} from '../../../environments/environment';
-import {Choice, GenerateChoicesDto} from './choice.class';
-import {StoryService} from '../story/story.service';
-import {mockChoices} from '../../../mocks/choices.mock';
+import { computed, Injectable, resource, ResourceRef, signal, Signal, WritableSignal } from '@angular/core';
+import { environment } from '../../../environments/environment';
+import { mockChoices } from '../../../mocks/choices.mock';
+import { StoryService } from '../story/story.service';
+import { Choice } from './choice.class';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChoiceService {
   private apiUrl = `${environment.api.baseUrl}/choice`;
-  private numberOfChoices: WritableSignal<{ nb: number }> = signal({nb: 3});
+  private numberOfChoices: WritableSignal<{ nb: number }> = signal({ nb: 3 });
 
-  private choicesResource : ResourceRef<Choice[] | undefined> = resource({
+  private choicesResource: ResourceRef<Choice[] | undefined> = resource({
     request: () => this.numberOfChoices(),
-    loader: async ({request, abortSignal}) => this.fetchChoices(request, abortSignal),
+    loader: async ({ request, abortSignal }) => this.fetchChoices(request, abortSignal),
   });
 
   public choices: Signal<Choice[] | undefined> = computed(() => this.choicesResource.value());
@@ -23,19 +23,18 @@ export class ChoiceService {
   constructor(private storyService: StoryService) {}
 
   public generateNewChoices(nb: number) {
-    console.log("nb:", nb);
-    this.numberOfChoices.set({nb: nb})
+    console.log('nb:', nb);
+    this.numberOfChoices.set({ nb: nb });
   }
 
   // Function to fetch the story
-  private async fetchChoices(request: any, abortSignal: AbortSignal): Promise<Choice[] | undefined> {
-
+  private async fetchChoices(request: unknown, abortSignal: AbortSignal): Promise<Choice[] | undefined> {
     const story = this.storyService.story();
-    if(!story) {
+    if (!story) {
       return undefined;
     }
 
-    console.log("generating new choices...");
+    console.log('generating new choices...');
     return mockChoices;
 
     /**const generateChoicesDto: GenerateChoicesDto = {

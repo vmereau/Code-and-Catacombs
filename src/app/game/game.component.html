@@ -1,20 +1,21 @@
-@if(step() === GameStep.InitStory) {
+@if (step() === GameStep.InitStory) {
   <h1>Choosing Story</h1>
   <app-story (storySelected)="setStep(GameStep.InitAdventurer)"></app-story>
 }
 
-@if(step() === GameStep.InitAdventurer) {
+@if (step() === GameStep.InitAdventurer) {
   <h1>Choosing Adventurer</h1>
-  <app-choose-adventurer (adventurerSelected)="setStep(GameStep.InitSkills)"></app-choose-adventurer>
+  <app-choose-adventurer
+    (adventurerSelected)="setStep(GameStep.InitSkills)"
+  ></app-choose-adventurer>
 }
 
-
-@if(step() === GameStep.InitSkills) {
+@if (step() === GameStep.InitSkills) {
   <h1>Choosing Skill</h1>
   <app-choose-skill (skillSelected)="startGame()"></app-choose-skill>
 }
 
-@if(step() === GameStep.GameLoop) {
+@if (step() === GameStep.GameLoop) {
   <app-adventurer-infos></app-adventurer-infos>
 
   @switch (encounter()) {
