@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output, Signal } from '@angular/core';
+import { Button } from 'primeng/button';
 import { AdventurerService } from '../adventurer/adventurer.service';
 import { Item } from '../shared/items/item.class';
 import { Shop } from './shop.class';
@@ -6,7 +7,7 @@ import { ShopService } from './shop.service';
 
 @Component({
   selector: 'app-shop',
-  imports: [],
+  imports: [Button],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.scss',
   standalone: true,
@@ -17,6 +18,8 @@ export class ShopComponent {
   public isLoading: Signal<boolean>;
   public isError: Signal<unknown>;
 
+  @Output() leaveShop = new EventEmitter();
+
   constructor(
     private shopService: ShopService,
     private adventurerService: AdventurerService,
@@ -24,10 +27,6 @@ export class ShopComponent {
     this.shop = this.shopService.shop;
     this.isLoading = this.shopService.isShopLoading;
     this.isError = this.shopService.isShopError;
-  }
-
-  public loadNewShop() {
-    this.shopService.loadNewShop();
   }
 
   public buy(item: Item): boolean {

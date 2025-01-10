@@ -1,0 +1,30 @@
+.upper-game-part {
+  display: flex;
+  justify-content: space-between;
+
+  .adventurer-infos {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 1rem;
+    margin: 1rem;
+    width: 30%;
+  }
+
+  .background {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 1rem;
+    margin: 1rem;
+    width: 30%;
+  }
+
+  .other-character-infos {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 1rem;
+    margin: 1rem;
+    width: 30%;
+  }
+}

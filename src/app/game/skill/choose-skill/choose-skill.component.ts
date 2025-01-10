@@ -21,7 +21,7 @@ export class ChooseSkillComponent {
 
   public selectSkill(): void {
     this.skillService.adventurerSkills.update((skills) => {
-      skills.push((this.skill.value() as Skill));
+      skills.push(this.skill.value() as Skill);
       return skills;
     });
 

@@ -19,9 +19,10 @@
 --
 <div>
   <span>Gold: {{ adventurer()?.gold }}</span>
+  <span>Experience: {{ adventurer()?.experience }}</span>
 </div>
 
-<div>
+<div class="adventurer-infos-actions">
   <app-show-inventory
     [inventory]="equipment"
     [inventoryName]="'Equipment'"

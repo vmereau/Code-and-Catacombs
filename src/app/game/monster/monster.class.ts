@@ -1,12 +1,6 @@
 import { Character } from '../shared/character/character.class';
 
-export class Adventurer extends Character {
-  archetype: string;
-
-  // Front Only
-  gold = 0;
-  experience = 0;
-
+export class Monster extends Character {
   constructor(
     name: string,
     level: number,
@@ -15,12 +9,14 @@ export class Adventurer extends Character {
     attack: number,
     mana: number,
     defense: number,
-    archetype: string,
   ) {
     super(name, level, description, health, attack, mana, defense);
-
-    this.archetype = archetype;
-    this.gold = 100;
-    this.experience = 0;
   }
+}
+
+export interface GenerateMonstersDto {
+  number: number;
+  level: number;
+  biome: string;
+  withPictures: boolean;
 }

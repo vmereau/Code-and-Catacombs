@@ -16,7 +16,21 @@
 }
 
 @if (step() === GameStep.GameLoop) {
-  <app-adventurer-infos></app-adventurer-infos>
+  <div class="upper-game-part">
+    <div class="adventurer-infos">
+      <app-adventurer-infos></app-adventurer-infos>
+    </div>
+
+    <img class="background" alt="Background"/>
+
+    <div class="other-character-infos">
+      <app-character-infos [character]="encounterCharacter"
+                           [isError]="encounterCharacterError"
+                           [isLoading]="encounterCharacterLoading">
+
+      </app-character-infos>
+    </div>
+  </div>
 
   @switch (encounter()) {
     @case (Encouter.Choices) {
@@ -26,13 +40,13 @@
       Elite fight !
     }
     @case (Encouter.Fight) {
-      Fight
+      <app-fight></app-fight>
     }
     @case (Encouter.Power) {
       Power
     }
     @case (Encouter.Shop) {
-      <app-shop></app-shop>
+      <app-shop (leaveShop)="goToChoices()"></app-shop>
     }
     @case (Encouter.Treasure) {
       Treasure

@@ -19,7 +19,7 @@ import { Adventurer } from './adventurer.class';
 export class AdventurerService {
   private apiUrl = `${environment.api.baseUrl}/adventurer`;
 
-  private adventurerResource: ResourceRef<Adventurer> = resource({
+  private adventurerResource: ResourceRef<Adventurer | undefined> = resource({
     loader: async ({ request, abortSignal }) => this.fetchAdventurer(request, abortSignal),
   });
 
@@ -44,12 +44,16 @@ export class AdventurerService {
     this.adventurer.update((adventurer) => {
       if (!adventurer) return undefined;
 
-      return {
-        ...adventurer,
-        currentMana: adventurer.mana,
-        currentHealth: adventurer.health,
-        gold: 100,
-      };
+      return new Adventurer(
+        adventurer.name,
+        adventurer.level,
+        adventurer.description,
+        adventurer.health,
+        adventurer.attack,
+        adventurer.mana,
+        adventurer.defense,
+        adventurer.archetype,
+      );
     });
   }
 

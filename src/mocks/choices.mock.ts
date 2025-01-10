@@ -17,6 +17,6 @@ export const mockChoices: Choice[] = [
     description:
       'You see a group of aquatic guardians patrolling a submerged temple, they are clearly hostile, engaging them might be risky.',
     title: 'Confront the Aquatic Guardians',
-    type: ChoiceTypeEnum.Treasure,
+    type: ChoiceTypeEnum.Fight,
   },
 ];

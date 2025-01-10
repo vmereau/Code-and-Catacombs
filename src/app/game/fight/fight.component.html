@@ -1,0 +1,11 @@
+@if (isError()) {
+  <p>An error happened</p>
+}
+
+@if (isLoading()) {
+  Loading fight...
+}
+
+@if (!isLoading() && !isError() && monster()) {
+  Fight !
+}

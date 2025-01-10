@@ -30,7 +30,9 @@
         <p>There are no effects for this skill. The IA is trolling.</p>
       }
 
-      <button (click)="buy(item)" [disabled]="!canBuy(item.cost)">Buy</button>
+      <p-button (click)="buy(item)" [disabled]="!canBuy(item.cost)">Buy</p-button>
     </div>
   }
+
+  <p-button (click)="leaveShop.emit()">Leave shop</p-button>
 }
