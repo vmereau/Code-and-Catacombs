@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {Skill} from '../skill.class';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Skill } from '../skill.class';
 
 @Component({
   selector: 'app-skill-info',
@@ -7,7 +7,7 @@ import {Skill} from '../skill.class';
   templateUrl: './skill-info.component.html',
   standalone: true,
   styleUrl: './skill-info.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SkillInfoComponent {
   @Input() skill: Skill | undefined;

@@ -1,10 +1,10 @@
 import { computed, Injectable, linkedSignal, resource, ResourceRef, Signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { mockMonster } from '../../../mocks/monster.mock';
 import { AdventurerService } from '../adventurer/adventurer.service';
 import { CharacterUpdatableNumberProperties } from '../shared/character/character.class';
 import { StoryService } from '../story/story.service';
-import { GenerateMonstersDto, Monster } from './monster.class';
-import {mockMonster} from '../../../mocks/monster.mock';
+import { Monster } from './monster.class';
 
 @Injectable({
   providedIn: 'root',

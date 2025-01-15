@@ -1,9 +1,13 @@
-import {Character, CharacterUpdatableNumberProperties} from './character.class';
-import {WritableSignal} from '@angular/core';
-import {Adventurer} from '../../adventurer/adventurer.class';
-import {Monster} from '../../monster/monster.class';
+import { WritableSignal } from '@angular/core';
+import { Adventurer } from '../../adventurer/adventurer.class';
+import { Monster } from '../../monster/monster.class';
+import { Character, CharacterUpdatableNumberProperties } from './character.class';
 
-export function updateCharacterStats(target: WritableSignal<Character | Adventurer | Monster | undefined>, property: CharacterUpdatableNumberProperties, value: number) {
+export function updateCharacterStats(
+  target: WritableSignal<Character | Adventurer | Monster | undefined>,
+  property: CharacterUpdatableNumberProperties,
+  value: number,
+) {
   target.update((target: Character | Adventurer | Monster | undefined) => {
     if (!target) return undefined;
 

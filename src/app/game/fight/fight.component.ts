@@ -1,15 +1,15 @@
-import {ChangeDetectionStrategy, Component, computed, effect, signal, Signal, WritableSignal} from '@angular/core';
-import {Monster} from '../monster/monster.class';
-import {MonsterService} from '../monster/monster.service';
-import {CharacterUpdatableNumberProperties} from '../shared/character/character.class';
-import {Adventurer} from '../adventurer/adventurer.class';
-import {AdventurerService} from '../adventurer/adventurer.service';
-import {Button} from 'primeng/button';
-import {Dialog} from 'primeng/dialog';
-import {SkillService} from '../skill/skill.service';
-import {Skill, SkillTargetCharacterEnum} from '../skill/skill.class';
-import {SkillInfoComponent} from '../skill/skill-info/skill-info.component';
-import {updateCharacterStats} from '../shared/character/character.utils';
+import { ChangeDetectionStrategy, Component, computed, effect, signal, Signal, WritableSignal } from '@angular/core';
+import { Button } from 'primeng/button';
+import { Dialog } from 'primeng/dialog';
+import { Adventurer } from '../adventurer/adventurer.class';
+import { AdventurerService } from '../adventurer/adventurer.service';
+import { Monster } from '../monster/monster.class';
+import { MonsterService } from '../monster/monster.service';
+import { CharacterUpdatableNumberProperties } from '../shared/character/character.class';
+import { updateCharacterStats } from '../shared/character/character.utils';
+import { SkillInfoComponent } from '../skill/skill-info/skill-info.component';
+import { Skill, SkillTargetCharacterEnum } from '../skill/skill.class';
+import { SkillService } from '../skill/skill.service';
 
 @Component({
   selector: 'app-fight',
@@ -17,11 +17,7 @@ import {updateCharacterStats} from '../shared/character/character.utils';
   standalone: true,
   styleUrl: './fight.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    Button,
-    Dialog,
-    SkillInfoComponent
-  ]
+  imports: [Button, Dialog, SkillInfoComponent],
 })
 export class FightComponent {
   public monster: WritableSignal<Monster | undefined>;
@@ -34,20 +30,22 @@ export class FightComponent {
   public combatLog: WritableSignal<string[]> = signal([]);
   public playerTurn: WritableSignal<boolean> = signal(true);
 
-  public useSkillVisible: boolean = false;
+  public useSkillVisible = false;
 
   public canAttack: Signal<boolean> = computed(() => {
-    if(!this.playerTurn()){
+    if (!this.playerTurn()) {
       return false;
     }
 
     const monsterCurrentHealth = this.monster()?.currentHealth;
     return !(monsterCurrentHealth && monsterCurrentHealth <= 0);
-  })
+  });
 
-  constructor(private monsterService: MonsterService,
-              private adventurerService: AdventurerService,
-              private skillService: SkillService) {
+  constructor(
+    private monsterService: MonsterService,
+    private adventurerService: AdventurerService,
+    private skillService: SkillService,
+  ) {
     this.monster = this.monsterService.monster;
     this.isLoading = this.monsterService.isMonsterLoading;
     this.isError = this.monsterService.isMonsterError;
@@ -60,12 +58,12 @@ export class FightComponent {
     });
 
     const monsterTurnEffect = effect(() => {
-      if(this.playerTurn()){
+      if (this.playerTurn()) {
         return;
       }
 
       this.monsterTurn();
-    })
+    });
   }
 
   public adventurerAttack(): void {
@@ -84,16 +82,19 @@ export class FightComponent {
   public castSkill(skill: Skill): void {
     const currentMana = this.adventurer()?.currentMana || 0;
 
-    if(currentMana < skill.cost){
-      this.addCombatLog(`Cannot cast ${skill.name} (${skill.cost}), insufficient mana: ${this.adventurer()?.currentMana}`)
+    if (currentMana < skill.cost) {
+      this.addCombatLog(
+        `Cannot cast ${skill.name} (${skill.cost}), insufficient mana: ${this.adventurer()?.currentMana}`,
+      );
       return;
     }
 
     skill.effects.forEach((skillEffect) => {
-      const target: WritableSignal<Adventurer | Monster | undefined> = skillEffect.targetCharacter === SkillTargetCharacterEnum.self ? this.adventurer : this.monster;
+      const target: WritableSignal<Adventurer | Monster | undefined> =
+        skillEffect.targetCharacter === SkillTargetCharacterEnum.self ? this.adventurer : this.monster;
       updateCharacterStats(target, skillEffect.targetProperty, skillEffect.value);
       this.addCombatLog(`${target()?.name}: ${skillEffect.targetProperty} ${skillEffect.value}`);
-    })
+    });
 
     this.adventurerService.updateStats(CharacterUpdatableNumberProperties.currentMana, -skill.cost);
     this.addCombatLog(`${this.adventurer()?.name} casted ${skill.name} successfully !`);
@@ -110,13 +111,13 @@ export class FightComponent {
   private addCombatLog(newLog: string): void {
     this.combatLog.update((log) => {
       return [...log, newLog];
-    })
+    });
   }
 
   private monsterTurn(): void {
     const monsterCurrentHealth = this.monster()?.currentHealth;
 
-    if(monsterCurrentHealth && monsterCurrentHealth <= 0){
+    if (monsterCurrentHealth && monsterCurrentHealth <= 0) {
       return;
     }
 
@@ -134,12 +135,12 @@ export class FightComponent {
 
   private checkEndOfFight(): void {
     const adventurerHealth = this.adventurer()?.currentHealth;
-    if(adventurerHealth && adventurerHealth <= 0){
+    if (adventurerHealth && adventurerHealth <= 0) {
       this.addCombatLog(`${this.adventurer()?.name} is dead, ${this.monster()?.name} wins !`);
     }
 
     const monsterHealth = this.monster()?.currentHealth;
-    if(monsterHealth && monsterHealth <= 0){
+    if (monsterHealth && monsterHealth <= 0) {
       this.addCombatLog(`${this.monster()?.name} is dead, ${this.adventurer()?.name} wins !`);
     }
   }
