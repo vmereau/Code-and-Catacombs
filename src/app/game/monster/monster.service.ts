@@ -4,6 +4,7 @@ import { AdventurerService } from '../adventurer/adventurer.service';
 import { CharacterUpdatableNumberProperties } from '../shared/character/character.class';
 import { StoryService } from '../story/story.service';
 import { GenerateMonstersDto, Monster } from './monster.class';
+import {mockMonster} from '../../../mocks/monster.mock';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,7 @@ export class MonsterService {
 
   public monster = linkedSignal(() => {
     const monsters: Monster[] | undefined = this.monstersResource.value();
+
     if (!monsters || monsters.length === 0) {
       return undefined;
     }
@@ -36,6 +38,7 @@ export class MonsterService {
       monster.defense,
     );
   });
+
   public isMonsterLoading: Signal<boolean> = computed(() => this.monstersResource.isLoading());
   public isMonsterError: Signal<unknown> = computed(() => this.monstersResource.error());
 
@@ -70,8 +73,9 @@ export class MonsterService {
     }
 
     console.log('generating a new Monster...');
+    return mockMonster;
 
-    const generateMonsterDto: GenerateMonstersDto = {
+    /*const generateMonsterDto: GenerateMonstersDto = {
       level: adventurer.level,
       biome: story.biome,
       number: 1,
@@ -88,6 +92,6 @@ export class MonsterService {
     });
 
     if (!response.ok) throw new Error('Unable to load new monster');
-    return response.json();
+    return response.json();*/
   }
 }

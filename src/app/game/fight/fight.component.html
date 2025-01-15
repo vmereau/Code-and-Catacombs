@@ -7,5 +7,13 @@
 }
 
 @if (!isLoading() && !isError() && monster()) {
-  Fight !
+  <div>
+    <p-button (click)="adventurerAttack()" [disabled]="!canAttack()">Attack</p-button>
+  </div>
+
+  <div>
+    @for (log of combatLog(); track $index) {
+      <div>{{log}}</div>
+    }
+  </div>
 }
