@@ -1,10 +1,13 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output, ResourceRef } from '@angular/core';
 import { Skill } from '../skill.class';
 import { SkillService } from '../skill.service';
+import {SkillInfoComponent} from '../skill-info/skill-info.component';
 
 @Component({
   selector: 'app-choose-skill',
-  imports: [],
+  imports: [
+    SkillInfoComponent
+  ],
   templateUrl: './choose-skill.component.html',
   standalone: true,
   styleUrl: './choose-skill.component.scss',
@@ -21,8 +24,11 @@ export class ChooseSkillComponent {
 
   public selectSkill(): void {
     this.skillService.adventurerSkills.update((skills) => {
-      skills.push(this.skill.value() as Skill);
-      return skills;
+      const skill: Skill | undefined = this.skill.value();
+
+      if(!skill) return skills;
+
+      return [...skills, skill];
     });
 
     this.skillSelected.emit(true);

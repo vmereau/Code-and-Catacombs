@@ -9,6 +9,7 @@
 @if (!isLoading() && !isError() && monster()) {
   <div>
     <p-button (click)="adventurerAttack()" [disabled]="!canAttack()">Attack</p-button>
+    <p-button (click)="toggleUseSkillsVisible()" [disabled]="!canAttack()">Use skill</p-button>
   </div>
 
   <div>
@@ -17,3 +18,15 @@
     }
   </div>
 }
+
+<p-dialog
+  header="Skills"
+  [modal]="true"
+  [(visible)]="useSkillVisible"
+  [style]="{ width: '25rem' }"
+>
+  @for (skill of adventurerSkills(); track $index) {
+    <app-skill-info [skill]="skill"></app-skill-info>
+    <p-button (onClick)="castSkill(skill)" [disabled]="!canCastSkill(skill)">Cast</p-button>
+  }
+</p-dialog>
