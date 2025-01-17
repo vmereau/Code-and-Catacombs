@@ -3,7 +3,7 @@ import { Monster } from '../app/game/monster/monster.class';
 export const mockMonster: Monster[] = [
   {
     name: 'Mossy Sprout',
-    attack: 3,
+    attack: 15,
     defense: 2,
     description: 'A small, moss-covered creature that seems barely alive.',
     health: 15,

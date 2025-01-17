@@ -10,6 +10,8 @@ import { updateCharacterStats } from '../shared/character/character.utils';
 import { SkillInfoComponent } from '../skill/skill-info/skill-info.component';
 import { Skill, SkillTargetCharacterEnum } from '../skill/skill.class';
 import { SkillService } from '../skill/skill.service';
+import {ItemInfosComponent} from '../shared/items/item-infos/item-infos.component';
+import {Item, ItemEffect} from '../shared/items/item.class';
 
 @Component({
   selector: 'app-fight',
@@ -17,12 +19,13 @@ import { SkillService } from '../skill/skill.service';
   standalone: true,
   styleUrl: './fight.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Button, Dialog, SkillInfoComponent],
+  imports: [Button, Dialog, SkillInfoComponent, ItemInfosComponent],
 })
 export class FightComponent {
   public monster: WritableSignal<Monster | undefined>;
   public adventurer: WritableSignal<Adventurer | undefined>;
   public adventurerSkills: WritableSignal<Skill[] | undefined>;
+  public adventurerConsumables: Signal<Item[] | undefined>;
 
   public isLoading: Signal<boolean>;
   public isError: Signal<unknown>;
@@ -31,8 +34,9 @@ export class FightComponent {
   public playerTurn: WritableSignal<boolean> = signal(true);
 
   public useSkillVisible = false;
+  public useConsumableVisible = false;
 
-  public canAttack: Signal<boolean> = computed(() => {
+  public canMakeAction: Signal<boolean> = computed(() => {
     if (!this.playerTurn()) {
       return false;
     }
@@ -44,7 +48,7 @@ export class FightComponent {
   constructor(
     private monsterService: MonsterService,
     private adventurerService: AdventurerService,
-    private skillService: SkillService,
+    private skillService: SkillService
   ) {
     this.monster = this.monsterService.monster;
     this.isLoading = this.monsterService.isMonsterLoading;
@@ -52,6 +56,7 @@ export class FightComponent {
 
     this.adventurer = this.adventurerService.adventurer;
     this.adventurerSkills = this.skillService.adventurerSkills;
+    this.adventurerConsumables = this.adventurerService.consumables;
 
     const endOfFightCheckEffect = effect(() => {
       this.checkEndOfFight();
@@ -67,16 +72,19 @@ export class FightComponent {
   }
 
   public adventurerAttack(): void {
-    const attack = this.adventurer()?.attack || 1;
+    const damage = Math.max((this.adventurer()?.attack || 1) - (this.monster()?.defense || 0), 1);
 
-    // this.monsterService.updateStats(CharacterUpdatableNumberProperties.currentHealth, -attack);
-    updateCharacterStats(this.monster, CharacterUpdatableNumberProperties.currentHealth, -attack);
-    this.addCombatLog(`${this.adventurer()?.name} attacks the ${this.monster()?.name}, inflicting ${attack} damage.`);
+    updateCharacterStats(this.monster, CharacterUpdatableNumberProperties.currentHealth, -damage);
+    this.addCombatLog(`${this.adventurer()?.name} attacks the ${this.monster()?.name}, inflicting ${damage} damage.`);
     this.playerTurn.set(false);
   }
 
   public toggleUseSkillsVisible(): void {
     this.useSkillVisible = !this.useSkillVisible;
+  }
+
+  public toggleUseConsumableVisible(): void {
+    this.useConsumableVisible = !this.useConsumableVisible;
   }
 
   public castSkill(skill: Skill): void {
@@ -103,9 +111,22 @@ export class FightComponent {
   }
 
   public canCastSkill(skill: Skill): boolean {
+    if(!this.canMakeAction()) return false;
+
     const currentMana = this.adventurer()?.currentMana || 0;
 
     return currentMana >= skill.cost;
+  }
+
+  public useConsumable(item: Item): void {
+    item.effects.forEach((effect:ItemEffect) => {
+      updateCharacterStats(this.adventurer, effect.targetProperty, effect.value);
+    })
+
+    this.adventurerService.removeItemFromInventory(item);
+    this.addCombatLog(`${this.adventurer()?.name} used ${item.name} successfully !`);
+    this.toggleUseConsumableVisible();
+    this.playerTurn.set(false);
   }
 
   private addCombatLog(newLog: string): void {
@@ -125,11 +146,10 @@ export class FightComponent {
   }
 
   private monsterAttack(): void {
-    const attack = this.monster()?.attack || 1;
+    const damage = Math.max((this.monster()?.attack || 1)- (this.adventurer()?.defense || 0), 1);
 
-    // this.adventurerService.updateStats(CharacterUpdatableNumberProperties.currentHealth, -attack);
-    updateCharacterStats(this.adventurer, CharacterUpdatableNumberProperties.currentHealth, -attack);
-    this.addCombatLog(`${this.monster()?.name} attacks ${this.adventurer()?.name}, inflicting ${attack} damage.`);
+    updateCharacterStats(this.adventurer, CharacterUpdatableNumberProperties.currentHealth, -damage);
+    this.addCombatLog(`${this.monster()?.name} attacks ${this.adventurer()?.name}, inflicting ${damage} damage.`);
     this.playerTurn.set(true);
   }
 

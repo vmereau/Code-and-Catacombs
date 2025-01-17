@@ -1,0 +1,18 @@
+<div>
+  <h2>{{ item?.name }}</h2>
+  <p>{{ item?.description }}</p>
+
+  <div>Level: {{ item?.level }}</div>
+  <div>Cost: {{ item?.cost }}</div>
+  <div>Type: {{ item?.type }}</div>
+
+  <p>Effects:</p>
+  @for (itemEffect of item?.effects; track $index) {
+    <div>
+      Property: {{ itemEffect.targetProperty }}<br />
+      value: {{ itemEffect.value }}
+    </div>
+  } @empty {
+    <p>There are no effects for this skill. The IA is trolling.</p>
+  }
+</div>

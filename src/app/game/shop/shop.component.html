@@ -9,29 +9,9 @@
 @if (!isError() && !isLoading() && shop()) {
   <h1>{{ shop()?.name }}</h1>
 
-  <p>{{ shop()?.shopkeeper_description }}</p>
-
   @for (item of shop()?.goods; track $index) {
-    <div>
-      <h2>{{ item.name }}</h2>
-      <p>{{ item.description }}</p>
-
-      <div>Level: {{ item.level }}</div>
-      <div>Cost: {{ item.cost }}</div>
-      <div>Type: {{ item.type }}</div>
-
-      <p>Effects:</p>
-      @for (itemEffect of item.effects; track $index) {
-        <div>
-          Property: {{ itemEffect.targetProperty }}<br />
-          value: {{ itemEffect.value }}
-        </div>
-      } @empty {
-        <p>There are no effects for this skill. The IA is trolling.</p>
-      }
-
-      <p-button (click)="buy(item)" [disabled]="!canBuy(item.cost)">Buy</p-button>
-    </div>
+    <app-item-infos [item]="item"></app-item-infos>
+    <p-button (click)="buy(item)" [disabled]="!canBuy(item.cost)">Buy</p-button>
   }
 
   <p-button (click)="leaveShop.emit()">Leave shop</p-button>

@@ -8,8 +8,9 @@
 
 @if (!isLoading() && !isError() && monster()) {
   <div>
-    <p-button (click)="adventurerAttack()" [disabled]="!canAttack()">Attack</p-button>
-    <p-button (click)="toggleUseSkillsVisible()" [disabled]="!canAttack()">Use skill</p-button>
+    <p-button (click)="adventurerAttack()" [disabled]="!canMakeAction()">Attack</p-button>
+    <p-button (click)="toggleUseSkillsVisible()" [disabled]="!canMakeAction()">Use skill</p-button>
+    <p-button (click)="toggleUseConsumableVisible()" [disabled]="!canMakeAction()">Use consumable</p-button>
   </div>
 
   <div>
@@ -28,5 +29,17 @@
   @for (skill of adventurerSkills(); track $index) {
     <app-skill-info [skill]="skill"></app-skill-info>
     <p-button (onClick)="castSkill(skill)" [disabled]="!canCastSkill(skill)">Cast</p-button>
+  }
+</p-dialog>
+
+<p-dialog
+  header="Consumables"
+  [modal]="true"
+  [(visible)]="useConsumableVisible"
+  [style]="{ width: '25rem' }"
+>
+  @for (item of adventurerConsumables(); track $index) {
+    <app-item-infos [item]="item"></app-item-infos>
+    <p-button (onClick)="useConsumable(item)" [disabled]="!canMakeAction()">Use</p-button>
   }
 </p-dialog>

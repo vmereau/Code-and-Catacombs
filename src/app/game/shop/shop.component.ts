@@ -4,10 +4,11 @@ import { AdventurerService } from '../adventurer/adventurer.service';
 import { Item } from '../shared/items/item.class';
 import { Shop } from './shop.class';
 import { ShopService } from './shop.service';
+import {ItemInfosComponent} from "../shared/items/item-infos/item-infos.component";
 
 @Component({
   selector: 'app-shop',
-  imports: [Button],
+  imports: [Button, ItemInfosComponent],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.scss',
   standalone: true,
