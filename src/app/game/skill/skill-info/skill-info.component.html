@@ -1,0 +1,15 @@
+<h2>{{ skill?.name }}</h2>
+
+<p>{{ skill?.description }}</p>
+<p>Mana cost: {{ skill?.cost }}</p>
+
+<p>Effects:</p>
+@for (skillEffect of skill?.effects; track $index) {
+  <div>
+    Cible: {{ skillEffect.targetCharacter }}, {{ skillEffect.targetProperty
+    }}<br />
+    valeur: {{ skillEffect.value }}
+  </div>
+} @empty {
+  <p>There are no effects for this skill. The IA is trolling.</p>
+}

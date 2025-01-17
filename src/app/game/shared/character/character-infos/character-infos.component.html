@@ -16,20 +16,20 @@
     <span>Description: {{ character()?.description }}</span>
     <span>Level: {{ character()?.level }}</span>
   </div>
-  ---
-  <div>
-  <span
-  >Health: {{ character()?.currentHealth }} /
-    {{ character()?.health }}</span
-  >
-    <span>Mana: {{ character()?.currentMana }} / {{ character()?.mana }}</span>
-  </div>
-  ---
-  <div>
-    <span>Defense: {{ character()?.defense }}</span>
-    <span>Attack: {{ character()?.attack }}</span>
-  </div>
-  --
+  @if(showStats()) {
+    ---
+    <div>
+    <span>
+      Health: {{ character()?.currentHealth }} /{{ character()?.health }}
+    </span>
+      <span>Mana: {{ character()?.currentMana }} / {{ character()?.mana }}</span>
+    </div>
+    ---
+    <div>
+      <span>Defense: {{ character()?.defense }}</span>
+      <span>Attack: {{ character()?.attack }}</span>
+    </div>
+  }
 }
 
 

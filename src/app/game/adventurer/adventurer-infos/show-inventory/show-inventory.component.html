@@ -8,20 +8,8 @@
   [(visible)]="inventoryVisible"
   [style]="{ width: '25rem' }"
 >
-  @for (equipment of inventory(); track $index) {
-    <div>
-      <span>Name: {{ equipment.name }}</span>
-      <span>level:{{ equipment.level }}</span>
-      --
-      <span>{{ equipment.description }}</span>
-      --
-      <div>
-        Effects:
-        @for (effect of equipment.effects; track $index) {
-          <span>{{ effect.targetProperty }}: {{ effect.value }}</span>
-        }
-      </div>
-    </div>
+  @for (item of inventory(); track $index) {
+    <app-item-infos [item]="item"></app-item-infos>
   } @empty {
     Nothing there !
   }

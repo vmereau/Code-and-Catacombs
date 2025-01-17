@@ -111,6 +111,19 @@ export class AdventurerService {
     });
   }
 
+  public removeItemFromInventory(item: Item): void {
+    this.inventory.update((inventory) => {
+      const usedItemIndex = inventory.findIndex((inventoryItem) => inventoryItem.name === item.name);
+
+      console.log(usedItemIndex);
+      if(usedItemIndex > -1) {
+        inventory.splice(usedItemIndex, 1);
+      }
+
+      return [...inventory];
+    })
+  }
+
   private async fetchAdventurer(request: unknown, abortSignal: AbortSignal): Promise<Adventurer> {
     console.log('generating a new Adventurer...');
 

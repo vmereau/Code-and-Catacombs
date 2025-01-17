@@ -38,8 +38,8 @@ export class Character {
 }
 
 export enum CharacterUpdatableNumberProperties {
-  health = 'health',
-  mana = 'mana',
+  currentHealth = 'currentHealth',
+  currentMana = 'currentMana',
   attack = 'attack',
   defense = 'defense',
 }

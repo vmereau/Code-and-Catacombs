@@ -2,10 +2,11 @@ import { ChangeDetectionStrategy, Component, Input, signal, Signal } from '@angu
 import { Button } from 'primeng/button';
 import { Dialog } from 'primeng/dialog';
 import { Item } from '../../../shared/items/item.class';
+import {ItemInfosComponent} from '../../../shared/items/item-infos/item-infos.component';
 
 @Component({
   selector: 'app-show-inventory',
-  imports: [Button, Dialog],
+  imports: [Button, Dialog, ItemInfosComponent],
   templateUrl: './show-inventory.component.html',
   standalone: true,
   styleUrl: './show-inventory.component.scss',
