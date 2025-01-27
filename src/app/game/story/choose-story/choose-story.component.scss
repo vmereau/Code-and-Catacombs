@@ -1,0 +1,25 @@
+.story-premise-container {
+  display: flex;
+  flex-direction: column;
+  width: 25rem;
+  margin-bottom: 1rem;
+}
+
+.story-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 1px lightgray solid;
+  border-top: 1px lightgray solid;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+
+  .story-summary-container {
+    width: 40%;
+  }
+}
+
+.story-actions-container {
+  display: flex;
+  gap: 1rem;
+}

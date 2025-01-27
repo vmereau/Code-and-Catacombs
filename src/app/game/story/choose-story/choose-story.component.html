@@ -7,14 +7,26 @@
 }
 
 @if (!isLoading() && !isError() && story()) {
-  <h2>{{ story()?.name }}</h2>
-  <br />
-  <p>Biome: {{ story()?.biome }}</p>
-  <br />
-  <p>{{ story()?.story_summary }}</p>
-  <br />
-  <p>Boss: {{ story()?.boss_name }}</p>
+  <div class="story-container">
+    <h2>{{ story()?.name }}</h2>
+    <br />
+    <p>Biome: {{ story()?.biome }}</p>
+    <br />
+    <div class="story-summary-container">
+      {{ story()?.story_summary }}
+    </div>
+    <br />
+    <p>Boss: {{ story()?.boss_name }}</p>
+  </div>
 
-  <button (click)="loadNewStory()">Generate a new story</button>
-  <button (click)="storySelected.emit(true)">Choose this story</button>
+  <div class="story-premise-container">
+    <label for="story-premise">Story Premise</label>
+    <input id="story-premise" type="text" pInputText [(ngModel)]="premise"/>
+    <small id="story-premise-help">Add details for the AI to build around or include in your story.</small>
+  </div>
+
+  <div class="story-actions-container">
+    <p-button (click)="loadNewStory()">Generate a new story</p-button>
+    <p-button (click)="storySelected.emit(true)">Choose this story</p-button>
+  </div>
 }

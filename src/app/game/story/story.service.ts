@@ -1,6 +1,6 @@
-import { computed, Injectable, resource, Signal } from '@angular/core';
+import {computed, Injectable, resource, signal, Signal, WritableSignal} from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { Story } from './story.class';
+import {GenerateStoryDto, Story} from './story.class';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,9 @@ export class StoryService {
   public isStoryLoading: Signal<boolean> = computed(() => this.storyResource.isLoading());
   public isStoryError: Signal<unknown> = computed(() => this.storyResource.error());
 
-  public loadNewStory() {
+  public premise: WritableSignal<string | undefined> = signal(undefined);
+
+  public loadNewStory(): void {
     this.storyResource.reload();
   }
 
@@ -24,9 +26,16 @@ export class StoryService {
   private async fetchStory(request: unknown, abortSignal: AbortSignal): Promise<Story> {
     console.log('generating a new story...');
 
+    const generateStoryDto: GenerateStoryDto = {};
+    if(this.premise()) generateStoryDto.premise = this.premise();
+
     const response = await fetch(`${this.apiUrl}/generate`, {
       signal: abortSignal,
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(generateStoryDto),
     });
 
     if (!response.ok) throw new Error('Unable to load new story');

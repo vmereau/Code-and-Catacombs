@@ -11,3 +11,11 @@ export class Story {
     this.boss_name = boss_name;
   }
 }
+
+export class GenerateStoryDto {
+  premise?: string | undefined;
+
+  constructor(premise?: string) {
+    this.premise = premise;
+  }
+}
