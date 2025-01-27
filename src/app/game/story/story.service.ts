@@ -1,6 +1,6 @@
-import {computed, Injectable, resource, signal, Signal, WritableSignal} from '@angular/core';
+import { computed, Injectable, resource, signal, Signal, WritableSignal } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import {GenerateStoryDto, Story} from './story.class';
+import { GenerateStoryDto, Story } from './story.class';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +27,7 @@ export class StoryService {
     console.log('generating a new story...');
 
     const generateStoryDto: GenerateStoryDto = {};
-    if(this.premise()) generateStoryDto.premise = this.premise();
+    if (this.premise()) generateStoryDto.premise = this.premise();
 
     const response = await fetch(`${this.apiUrl}/generate`, {
       signal: abortSignal,

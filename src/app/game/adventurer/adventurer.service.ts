@@ -116,12 +116,12 @@ export class AdventurerService {
       const usedItemIndex = inventory.findIndex((inventoryItem) => inventoryItem.name === item.name);
 
       console.log(usedItemIndex);
-      if(usedItemIndex > -1) {
+      if (usedItemIndex > -1) {
         inventory.splice(usedItemIndex, 1);
       }
 
       return [...inventory];
-    })
+    });
   }
 
   private async fetchAdventurer(request: unknown, abortSignal: AbortSignal): Promise<Adventurer> {

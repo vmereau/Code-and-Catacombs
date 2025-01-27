@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {Item} from '../item.class';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Item } from '../item.class';
 
 @Component({
   selector: 'app-item-infos',
@@ -7,7 +7,7 @@ import {Item} from '../item.class';
   templateUrl: './item-infos.component.html',
   standalone: true,
   styleUrl: './item-infos.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemInfosComponent {
   @Input() item: Item | undefined = undefined;

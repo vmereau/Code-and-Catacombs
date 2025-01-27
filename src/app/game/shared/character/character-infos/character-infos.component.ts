@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, Signal, signal, WritableSignal } from '@angular/core';
 import { Character } from '../character.class';
-import {single} from 'rxjs';
 
 @Component({
   selector: 'app-character-infos',

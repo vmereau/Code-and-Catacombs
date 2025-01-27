@@ -7,11 +7,11 @@ import { Monster } from '../monster/monster.class';
 import { MonsterService } from '../monster/monster.service';
 import { CharacterUpdatableNumberProperties } from '../shared/character/character.class';
 import { updateCharacterStats } from '../shared/character/character.utils';
+import { ItemInfosComponent } from '../shared/items/item-infos/item-infos.component';
+import { Item, ItemEffect } from '../shared/items/item.class';
 import { SkillInfoComponent } from '../skill/skill-info/skill-info.component';
 import { Skill, SkillTargetCharacterEnum } from '../skill/skill.class';
 import { SkillService } from '../skill/skill.service';
-import {ItemInfosComponent} from '../shared/items/item-infos/item-infos.component';
-import {Item, ItemEffect} from '../shared/items/item.class';
 
 @Component({
   selector: 'app-fight',
@@ -48,7 +48,7 @@ export class FightComponent {
   constructor(
     private monsterService: MonsterService,
     private adventurerService: AdventurerService,
-    private skillService: SkillService
+    private skillService: SkillService,
   ) {
     this.monster = this.monsterService.monster;
     this.isLoading = this.monsterService.isMonsterLoading;
@@ -111,7 +111,7 @@ export class FightComponent {
   }
 
   public canCastSkill(skill: Skill): boolean {
-    if(!this.canMakeAction()) return false;
+    if (!this.canMakeAction()) return false;
 
     const currentMana = this.adventurer()?.currentMana || 0;
 
@@ -119,9 +119,9 @@ export class FightComponent {
   }
 
   public useConsumable(item: Item): void {
-    item.effects.forEach((effect:ItemEffect) => {
+    item.effects.forEach((effect: ItemEffect) => {
       updateCharacterStats(this.adventurer, effect.targetProperty, effect.value);
-    })
+    });
 
     this.adventurerService.removeItemFromInventory(item);
     this.addCombatLog(`${this.adventurer()?.name} used ${item.name} successfully !`);
@@ -146,7 +146,7 @@ export class FightComponent {
   }
 
   private monsterAttack(): void {
-    const damage = Math.max((this.monster()?.attack || 1)- (this.adventurer()?.defense || 0), 1);
+    const damage = Math.max((this.monster()?.attack || 1) - (this.adventurer()?.defense || 0), 1);
 
     updateCharacterStats(this.adventurer, CharacterUpdatableNumberProperties.currentHealth, -damage);
     this.addCombatLog(`${this.monster()?.name} attacks ${this.adventurer()?.name}, inflicting ${damage} damage.`);

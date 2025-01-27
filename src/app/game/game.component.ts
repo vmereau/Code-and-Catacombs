@@ -87,7 +87,12 @@ export class GameComponent {
         case ChoiceTypeEnum.Shop:
           console.log('selected Shop');
           this.shopService.generateNewShop();
-          this.setEncounter(this.shopService.shopKeeper, this.shopService.isShopLoading, this.shopService.isShopError, false);
+          this.setEncounter(
+            this.shopService.shopKeeper,
+            this.shopService.isShopLoading,
+            this.shopService.isShopError,
+            false,
+          );
           break;
 
         case ChoiceTypeEnum.Power:
@@ -118,7 +123,7 @@ export class GameComponent {
     encounter: WritableSignal<Character | undefined>,
     encounterCharacterLoading: Signal<boolean>,
     encounterCharacterError: Signal<unknown>,
-    showStats: boolean = true,
+    showStats = true,
   ): void {
     this.encounterCharacter = encounter;
     this.encounterCharacterLoading = encounterCharacterLoading;

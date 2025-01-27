@@ -1,17 +1,13 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Output, Signal, WritableSignal} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output, Signal, WritableSignal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Button } from 'primeng/button';
+import { InputText } from 'primeng/inputtext';
 import { Story } from '../story.class';
 import { StoryService } from '../story.service';
-import {InputText} from 'primeng/inputtext';
-import {FormsModule} from '@angular/forms';
-import {Button} from 'primeng/button';
 
 @Component({
   selector: 'app-story',
-  imports: [
-    InputText,
-    FormsModule,
-    Button
-  ],
+  imports: [InputText, FormsModule, Button],
   templateUrl: './choose-story.component.html',
   standalone: true,
   styleUrl: './choose-story.component.scss',

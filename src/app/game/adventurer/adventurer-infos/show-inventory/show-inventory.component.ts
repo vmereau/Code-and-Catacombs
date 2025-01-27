@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, signal, Signal } from '@angular/core';
 import { Button } from 'primeng/button';
 import { Dialog } from 'primeng/dialog';
+import { ItemInfosComponent } from '../../../shared/items/item-infos/item-infos.component';
 import { Item } from '../../../shared/items/item.class';
-import {ItemInfosComponent} from '../../../shared/items/item-infos/item-infos.component';
 
 @Component({
   selector: 'app-show-inventory',

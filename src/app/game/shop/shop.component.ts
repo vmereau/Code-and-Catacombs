@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output, Signal } from '@angular/core';
 import { Button } from 'primeng/button';
 import { AdventurerService } from '../adventurer/adventurer.service';
+import { ItemInfosComponent } from '../shared/items/item-infos/item-infos.component';
 import { Item } from '../shared/items/item.class';
 import { Shop } from './shop.class';
 import { ShopService } from './shop.service';
-import {ItemInfosComponent} from "../shared/items/item-infos/item-infos.component";
 
 @Component({
   selector: 'app-shop',
