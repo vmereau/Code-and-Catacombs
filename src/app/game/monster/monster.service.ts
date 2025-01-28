@@ -36,6 +36,7 @@ export class MonsterService {
       monster.attack,
       monster.mana,
       monster.defense,
+      monster.experienceGiven,
     );
   });
 

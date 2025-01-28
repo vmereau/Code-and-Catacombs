@@ -1,6 +1,8 @@
 import { Character } from '../shared/character/character.class';
 
 export class Monster extends Character {
+  experienceGiven: number;
+
   constructor(
     name: string,
     level: number,
@@ -9,8 +11,11 @@ export class Monster extends Character {
     attack: number,
     mana: number,
     defense: number,
+    experienceGiven: number,
   ) {
     super(name, level, description, health, attack, mana, defense);
+
+    this.experienceGiven = experienceGiven;
   }
 }
 

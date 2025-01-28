@@ -1,7 +1,16 @@
-import { ChangeDetectionStrategy, Component, computed, effect, signal, Signal, WritableSignal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  EffectRef,
+  signal,
+  Signal,
+  WritableSignal,
+} from '@angular/core';
 import { Button } from 'primeng/button';
 import { Dialog } from 'primeng/dialog';
-import { Adventurer } from '../adventurer/adventurer.class';
+import { Adventurer, AdventurerUpdatableNumberProperties } from '../adventurer/adventurer.class';
 import { AdventurerService } from '../adventurer/adventurer.service';
 import { Monster } from '../monster/monster.class';
 import { MonsterService } from '../monster/monster.service';
@@ -59,7 +68,7 @@ export class FightComponent {
     this.adventurerConsumables = this.adventurerService.consumables;
 
     const endOfFightCheckEffect = effect(() => {
-      this.checkEndOfFight();
+      this.checkEndOfFight(endOfFightCheckEffect);
     });
 
     const monsterTurnEffect = effect(() => {
@@ -153,15 +162,29 @@ export class FightComponent {
     this.playerTurn.set(true);
   }
 
-  private checkEndOfFight(): void {
+  private checkEndOfFight(effectRef: EffectRef): void {
+    console.log('check end of fight');
     const adventurerHealth = this.adventurer()?.currentHealth;
-    if (adventurerHealth && adventurerHealth <= 0) {
-      this.addCombatLog(`${this.adventurer()?.name} is dead, ${this.monster()?.name} wins !`);
+    if (adventurerHealth != null && adventurerHealth <= 0) {
+      this.processDefeat();
+      effectRef.destroy();
     }
 
     const monsterHealth = this.monster()?.currentHealth;
-    if (monsterHealth && monsterHealth <= 0) {
-      this.addCombatLog(`${this.monster()?.name} is dead, ${this.adventurer()?.name} wins !`);
+    if (monsterHealth != null && monsterHealth <= 0) {
+      this.processWin();
+      effectRef.destroy();
     }
+  }
+
+  private processWin(): void {
+    this.addCombatLog(`${this.monster()?.name} is dead, ${this.adventurer()?.name} wins !`);
+    const experienceGiven = this.monster()?.experienceGiven || 1;
+
+    this.adventurerService.updateStats(AdventurerUpdatableNumberProperties.experience, experienceGiven);
+  }
+
+  private processDefeat(): void {
+    this.addCombatLog(`${this.adventurer()?.name} is dead, ${this.monster()?.name} wins !`);
   }
 }

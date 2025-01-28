@@ -11,7 +11,7 @@ import {
 import { environment } from '../../../environments/environment';
 import { CharacterUpdatableNumberProperties } from '../shared/character/character.class';
 import { Item, ItemTypeEnum } from '../shared/items/item.class';
-import { Adventurer, GenerateAdventurerDto } from './adventurer.class';
+import { Adventurer, AdventurerUpdatableNumberProperties, GenerateAdventurerDto } from './adventurer.class';
 
 @Injectable({
   providedIn: 'root',
@@ -59,7 +59,10 @@ export class AdventurerService {
     });
   }
 
-  public updateStats(property: CharacterUpdatableNumberProperties, value: number) {
+  public updateStats(
+    property: CharacterUpdatableNumberProperties | AdventurerUpdatableNumberProperties,
+    value: number,
+  ) {
     this.adventurer.update((adventurer) => {
       if (!adventurer) return undefined;
 

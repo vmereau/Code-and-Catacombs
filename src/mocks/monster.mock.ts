@@ -3,7 +3,7 @@ import { Monster } from '../app/game/monster/monster.class';
 export const mockMonster: Monster[] = [
   {
     name: 'Mossy Sprout',
-    attack: 15,
+    attack: 10,
     defense: 2,
     description: 'A small, moss-covered creature that seems barely alive.',
     health: 15,
@@ -11,5 +11,6 @@ export const mockMonster: Monster[] = [
     mana: 4,
     currentHealth: 15,
     currentMana: 4,
+    experienceGiven: 10,
   },
 ];
