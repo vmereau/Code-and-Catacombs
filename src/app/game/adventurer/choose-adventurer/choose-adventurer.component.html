@@ -1,5 +1,6 @@
 @if (isError()) {
   <p>An error happened</p>
+  <button (click)="loadNewAdventurer()">Generate a new adventurer</button>
 }
 
 @if (isLoading()) {

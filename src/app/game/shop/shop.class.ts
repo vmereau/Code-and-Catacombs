@@ -15,5 +15,6 @@ export class Shop {
 export interface GenerateShopDto {
   numberOfItems: number;
   level: number;
-  adventurerArchetype: string | undefined;
+  adventurerArchetype?: string;
+  biome?: string;
 }

@@ -1,5 +1,6 @@
 @if (isError()) {
   <p>An error happened</p>
+  <p-button (click)="loadNewStory()">Generate a new story</p-button>
 }
 
 @if (isLoading()) {
@@ -7,6 +8,12 @@
 }
 
 @if (!isLoading() && !isError() && story()) {
+  <div class="story-premise-container">
+    <label for="story-premise">Story Premise</label>
+    <input id="story-premise" type="text" pInputText [(ngModel)]="premise"/>
+    <small id="story-premise-help">Add details for the AI to build around or include in your story.</small>
+  </div>
+
   <div class="story-container">
     <h2>{{ story()?.name }}</h2>
     <br />
@@ -17,12 +24,6 @@
     </div>
     <br />
     <p>Boss: {{ story()?.boss_name }}</p>
-  </div>
-
-  <div class="story-premise-container">
-    <label for="story-premise">Story Premise</label>
-    <input id="story-premise" type="text" pInputText [(ngModel)]="premise"/>
-    <small id="story-premise-help">Add details for the AI to build around or include in your story.</small>
   </div>
 
   <div class="story-actions-container">

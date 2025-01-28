@@ -2,6 +2,7 @@ import { computed, Injectable, linkedSignal, resource, Signal, WritableSignal } 
 import { environment } from '../../../environments/environment';
 import { AdventurerService } from '../adventurer/adventurer.service';
 import { Character } from '../shared/character/character.class';
+import { StoryService } from '../story/story.service';
 import { GenerateShopDto, Shop } from './shop.class';
 
 @Injectable({
@@ -25,7 +26,10 @@ export class ShopService {
     return { ...character };
   });
 
-  constructor(private adventurerService: AdventurerService) {}
+  constructor(
+    private adventurerService: AdventurerService,
+    private storyService: StoryService,
+  ) {}
 
   public generateNewShop() {
     this.shopResource.reload();
@@ -44,6 +48,10 @@ export class ShopService {
       level: 1,
       numberOfItems: 3,
     };
+
+    const biome = this.storyService.story()?.biome;
+
+    if (biome) generateShopDto.biome = biome;
 
     const response = await fetch(`${this.apiUrl}/generate`, {
       signal: abortSignal,

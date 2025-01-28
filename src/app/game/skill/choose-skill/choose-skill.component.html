@@ -1,5 +1,6 @@
 @if (skill.error()) {
   <p>An error happened</p>
+  <button (click)="skill.reload()">Generate a new skill</button>
 }
 
 @if (skill.isLoading()) {

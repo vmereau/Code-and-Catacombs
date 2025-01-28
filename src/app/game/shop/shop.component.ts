@@ -45,4 +45,8 @@ export class ShopComponent {
 
     return gold >= amount;
   }
+
+  public generateNewShop(): void {
+    this.shopService.generateNewShop();
+  }
 }
