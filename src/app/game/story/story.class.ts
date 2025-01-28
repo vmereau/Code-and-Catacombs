@@ -13,7 +13,7 @@ export class Story {
 }
 
 export class GenerateStoryDto {
-  premise?: string | undefined;
+  premise?: string;
 
   constructor(premise?: string) {
     this.premise = premise;

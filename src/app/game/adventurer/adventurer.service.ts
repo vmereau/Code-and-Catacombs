@@ -11,7 +11,7 @@ import {
 import { environment } from '../../../environments/environment';
 import { CharacterUpdatableNumberProperties } from '../shared/character/character.class';
 import { Item, ItemTypeEnum } from '../shared/items/item.class';
-import { Adventurer } from './adventurer.class';
+import { Adventurer, GenerateAdventurerDto } from './adventurer.class';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +35,8 @@ export class AdventurerService {
   public consumables: Signal<Item[]> = computed(() => {
     return this.inventory().filter((item) => item.type === ItemTypeEnum.consumable);
   });
+
+  public additionalGenerationInfos: WritableSignal<string | undefined> = signal(undefined);
 
   public loadNewAdventurer() {
     this.adventurerResource.reload();
@@ -127,9 +129,18 @@ export class AdventurerService {
   private async fetchAdventurer(request: unknown, abortSignal: AbortSignal): Promise<Adventurer> {
     console.log('generating a new Adventurer...');
 
+    const generateAdventurerDto: GenerateAdventurerDto = {};
+
+    if (this.additionalGenerationInfos())
+      generateAdventurerDto.additionalGenerationInfos = this.additionalGenerationInfos();
+
     const response = await fetch(`${this.apiUrl}/generate`, {
       signal: abortSignal,
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(generateAdventurerDto),
     });
 
     if (!response.ok) throw new Error('Unable to load new adventurer');

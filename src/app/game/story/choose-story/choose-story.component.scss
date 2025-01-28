@@ -12,14 +12,10 @@
   border-bottom: 1px lightgray solid;
   border-top: 1px lightgray solid;
   padding-bottom: 1rem;
-  margin-bottom: 1rem;
+  margin: 1rem 0 1rem 0;
 
   .story-summary-container {
     width: 40%;
   }
 }
 
-.story-actions-container {
-  display: flex;
-  gap: 1rem;
-}

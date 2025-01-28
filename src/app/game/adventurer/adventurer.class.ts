@@ -24,3 +24,11 @@ export class Adventurer extends Character {
     this.experience = 0;
   }
 }
+
+export class GenerateAdventurerDto {
+  additionalGenerationInfos?: string;
+
+  constructor(about?: string) {
+    this.additionalGenerationInfos = about;
+  }
+}
