@@ -119,7 +119,18 @@ export class GameComponent {
     this.encounter.set(ChoiceTypeEnum.Choices);
   }
 
-  public setEncounter(
+  public setStep(step: GameStep) {
+    this.step.set(step);
+  }
+
+  public choiceSelected(choice: Choice): void {
+    // force effect trigger if same choice type
+    this.encounter.set(ChoiceTypeEnum.None);
+
+    this.encounter.set(choice.type);
+  }
+
+  private setEncounter(
     encounter: WritableSignal<Character | undefined>,
     encounterCharacterLoading: Signal<boolean>,
     encounterCharacterError: Signal<unknown>,
@@ -131,20 +142,10 @@ export class GameComponent {
     this.showEncounterStats.set(showStats);
   }
 
-  public resetEncounter(): void {
+  private resetEncounter(): void {
     this.encounterCharacter = signal(undefined);
     this.encounterCharacterLoading = signal(false);
     this.encounterCharacterError = signal(undefined);
     this.showEncounterStats.set(true);
-  }
-
-  setStep(step: GameStep) {
-    this.step.set(step);
-  }
-
-  public choiceSelected(choice: Choice): void {
-    // force effect trigger if same choice type
-    this.encounter.set(ChoiceTypeEnum.None);
-    this.encounter.set(choice.type);
   }
 }

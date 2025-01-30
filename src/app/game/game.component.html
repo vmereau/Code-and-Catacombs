@@ -41,7 +41,7 @@
       Elite fight !
     }
     @case (Encouter.Fight) {
-      <app-fight></app-fight>
+      <app-fight (leaveFightEvent)="goToChoices()"></app-fight>
     }
     @case (Encouter.Power) {
       Power

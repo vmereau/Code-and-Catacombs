@@ -38,4 +38,5 @@ export class GenerateAdventurerDto {
 
 export enum AdventurerUpdatableNumberProperties {
   experience = 'experience',
+  gold = 'gold',
 }

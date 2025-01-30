@@ -1,4 +1,4 @@
-@if (isError()) {
+@if (isError() && !isLoading()) {
   <p>An error happened</p>
   <p-button (click)="loadNewStory()">Generate a new story</p-button>
 }

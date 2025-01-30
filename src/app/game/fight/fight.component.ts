@@ -4,6 +4,8 @@ import {
   computed,
   effect,
   EffectRef,
+  EventEmitter,
+  Output,
   signal,
   Signal,
   WritableSignal,
@@ -39,11 +41,15 @@ export class FightComponent {
   public isLoading: Signal<boolean>;
   public isError: Signal<unknown>;
 
+  public isWon: WritableSignal<boolean> = signal(false);
+
   public combatLog: WritableSignal<string[]> = signal([]);
   public playerTurn: WritableSignal<boolean> = signal(true);
 
   public useSkillVisible = false;
   public useConsumableVisible = false;
+
+  @Output() leaveFightEvent = new EventEmitter();
 
   public canMakeAction: Signal<boolean> = computed(() => {
     if (!this.playerTurn()) {
@@ -138,6 +144,15 @@ export class FightComponent {
     this.playerTurn.set(false);
   }
 
+  public reloadEncounter(): void {
+    this.monsterService.generateNewMonster();
+  }
+
+  public leaveFight(): void {
+    this.monsterService.removeMonster();
+    this.leaveFightEvent.emit();
+  }
+
   private addCombatLog(newLog: string): void {
     this.combatLog.update((log) => {
       return [...log, newLog];
@@ -147,7 +162,7 @@ export class FightComponent {
   private monsterTurn(): void {
     const monsterCurrentHealth = this.monster()?.currentHealth;
 
-    if (monsterCurrentHealth && monsterCurrentHealth <= 0) {
+    if (monsterCurrentHealth != null && monsterCurrentHealth <= 0) {
       return;
     }
 
@@ -178,10 +193,18 @@ export class FightComponent {
   }
 
   private processWin(): void {
+    console.log('win', this.monster());
     this.addCombatLog(`${this.monster()?.name} is dead, ${this.adventurer()?.name} wins !`);
     const experienceGiven = this.monster()?.experienceGiven || 1;
+    const goldGiven = this.monster()?.goldGiven || 1;
 
     this.adventurerService.updateStats(AdventurerUpdatableNumberProperties.experience, experienceGiven);
+    this.addCombatLog(`${this.adventurer()?.name} gains ${experienceGiven} exp`);
+
+    this.adventurerService.updateStats(AdventurerUpdatableNumberProperties.gold, goldGiven);
+    this.addCombatLog(`${this.adventurer()?.name} gains ${goldGiven} gold`);
+
+    this.isWon.set(true);
   }
 
   private processDefeat(): void {

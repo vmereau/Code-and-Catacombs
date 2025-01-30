@@ -12,5 +12,6 @@ export const mockMonster: Monster[] = [
     currentHealth: 15,
     currentMana: 4,
     experienceGiven: 10,
+    goldGiven: 20,
   },
 ];

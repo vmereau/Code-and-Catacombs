@@ -6,7 +6,7 @@
   Loading encounter...
 }
 
-@if (isError()) {
+@if (isError() && !isLoading()) {
   error while loading encounter...
 }
 

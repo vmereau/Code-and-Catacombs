@@ -1,4 +1,4 @@
-@if (isError()) {
+@if (isError() && !isLoading()) {
   error while loading the shop
   <button (click)="generateNewShop()">Generate a new shop</button>
 }

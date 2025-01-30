@@ -1,5 +1,6 @@
-@if (isError()) {
+@if (isError() && !isLoading()) {
   <p>An error happened</p>
+  <p-button (click)="reloadEncounter()">Reload monster</p-button>
 }
 
 @if (isLoading()) {
@@ -11,6 +12,10 @@
     <p-button (click)="adventurerAttack()" [disabled]="!canMakeAction()">Attack</p-button>
     <p-button (click)="toggleUseSkillsVisible()" [disabled]="!canMakeAction()">Use skill</p-button>
     <p-button (click)="toggleUseConsumableVisible()" [disabled]="!canMakeAction()">Use consumable</p-button>
+
+    @if (isWon()) {
+      <p-button (click)="leaveFight()">Continue</p-button>
+    }
   </div>
 
   <div>

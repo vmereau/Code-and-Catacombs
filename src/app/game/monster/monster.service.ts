@@ -1,10 +1,9 @@
 import { computed, Injectable, linkedSignal, resource, ResourceRef, Signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { mockMonster } from '../../../mocks/monster.mock';
 import { AdventurerService } from '../adventurer/adventurer.service';
 import { CharacterUpdatableNumberProperties } from '../shared/character/character.class';
 import { StoryService } from '../story/story.service';
-import { Monster } from './monster.class';
+import { GenerateMonstersDto, Monster } from './monster.class';
 
 @Injectable({
   providedIn: 'root',
@@ -37,6 +36,7 @@ export class MonsterService {
       monster.mana,
       monster.defense,
       monster.experienceGiven,
+      monster.goldGiven,
     );
   });
 
@@ -50,6 +50,10 @@ export class MonsterService {
 
   public generateNewMonster() {
     this.monstersResource.reload();
+  }
+
+  public removeMonster(): void {
+    this.monstersResource.set(undefined);
   }
 
   public updateStats(property: CharacterUpdatableNumberProperties, value: number) {
@@ -73,10 +77,7 @@ export class MonsterService {
       return undefined;
     }
 
-    console.log('generating a new Monster...');
-    return mockMonster;
-
-    /*const generateMonsterDto: GenerateMonstersDto = {
+    const generateMonsterDto: GenerateMonstersDto = {
       level: adventurer.level,
       biome: story.biome,
       number: 1,
@@ -93,6 +94,6 @@ export class MonsterService {
     });
 
     if (!response.ok) throw new Error('Unable to load new monster');
-    return response.json();*/
+    return response.json();
   }
 }
