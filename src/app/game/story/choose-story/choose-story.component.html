@@ -17,6 +17,8 @@
 
   <div class="story-container">
     <h2>{{ story()?.name }}</h2>
+
+    <app-image [img]="storyImg" [isImgError]="isStoryImgError" [isImgLoading]="isStoryImgLoading"></app-image>
     <br />
     <p>Biome: {{ story()?.biome }}</p>
     <br />
@@ -26,6 +28,7 @@
     <br />
     <p>Boss: {{ story()?.boss_name }}</p>
   </div>
+
 
   <p-button (click)="storySelected.emit(true)">Choose this story</p-button>
 }

@@ -1,5 +1,6 @@
 import {
   computed,
+  effect,
   Injectable,
   linkedSignal,
   resource,
@@ -8,10 +9,15 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { environment } from '../../../environments/environment';
-import { CharacterUpdatableNumberProperties } from '../shared/character/character.class';
-import { Item, ItemTypeEnum } from '../shared/items/item.class';
-import { Adventurer, AdventurerUpdatableNumberProperties, GenerateAdventurerDto } from './adventurer.class';
+import {environment} from '../../../environments/environment';
+import {CharacterUpdatableNumberProperties} from '../shared/character/character.class';
+import {Item, ItemTypeEnum} from '../shared/items/item.class';
+import {
+  Adventurer,
+  AdventurerLevelUpDto,
+  AdventurerUpdatableNumberProperties,
+  GenerateAdventurerDto
+} from './adventurer.class';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +28,11 @@ export class AdventurerService {
   private adventurerResource: ResourceRef<Adventurer | undefined> = resource({
     loader: async ({ request, abortSignal }) => this.fetchAdventurer(request, abortSignal),
   });
+
+  private levelUpResource: ResourceRef<Adventurer | undefined> = resource({
+    request: () => this.needLevelUp(),
+    loader: async ({ request, abortSignal }) => this.fetchLevelUp(request, abortSignal),
+  })
 
   public adventurer = linkedSignal(() => this.adventurerResource.value());
   public isAdventurerLoading: Signal<boolean> = computed(() => this.adventurerResource.isLoading());
@@ -37,6 +48,25 @@ export class AdventurerService {
   });
 
   public additionalGenerationInfos: WritableSignal<string | undefined> = signal(undefined);
+
+  public needLevelUp: Signal<boolean> = computed(() => {
+    const experience  = this.adventurer()?.experience || 0;
+    const levelUpThreshold = this.adventurer()?.levelUpExperience || 1;
+
+    return experience / levelUpThreshold >= 1;
+  })
+
+  constructor() {
+    const applyLevelUpEffect = effect(() => {
+      const leveledUpAdventurer = this.levelUpResource.value();
+
+      if(leveledUpAdventurer) {
+        console.log("applying level up");
+        this.adventurer.set(leveledUpAdventurer);
+      }
+    })
+  }
+
 
   public loadNewAdventurer() {
     this.adventurerResource.reload();
@@ -59,7 +89,7 @@ export class AdventurerService {
     });
   }
 
-  public updateStats(
+  public updateStat(
     property: CharacterUpdatableNumberProperties | AdventurerUpdatableNumberProperties,
     value: number,
   ) {
@@ -75,7 +105,7 @@ export class AdventurerService {
   public addToInventory(item: Item): void {
     if (item.type === ItemTypeEnum.equipment) {
       item.effects.forEach((effect) => {
-        this.updateStats(effect.targetProperty, effect.value);
+        this.updateStat(effect.targetProperty, effect.value);
       });
     }
 
@@ -86,34 +116,26 @@ export class AdventurerService {
 
   public withdrawGold(amount: number): void {
     if (amount < 0) {
-      throw new Error('Amount must be positive');
+      throw new Error('Amount must be positive or 0');
     }
 
-    this.adventurer.update((adventurer) => {
-      if (!adventurer) throw new Error('Adventurer undefined');
-
-      if (!adventurer.gold) {
-        adventurer.gold = 0;
-      }
-
-      return { ...adventurer, gold: adventurer.gold - amount };
-    });
+    this.updateStat(AdventurerUpdatableNumberProperties.gold, -amount);
   }
 
   public addGold(amount: number): void {
     if (amount < 0) {
-      throw new Error('Amount must be positive');
+      throw new Error('Amount must be positive or 0');
     }
 
-    this.adventurer.update((adventurer) => {
-      if (!adventurer) throw new Error('Adventurer undefined');
+    this.updateStat(AdventurerUpdatableNumberProperties.gold, amount);
+  }
 
-      if (!adventurer.gold) {
-        adventurer.gold = 0;
-      }
+  public giveExperience(amount: number): void {
+    if (amount < 0) {
+      throw new Error('Amount must be positive or 0');
+    }
 
-      return { ...adventurer, gold: adventurer.gold + amount };
-    });
+    this.updateStat(AdventurerUpdatableNumberProperties.experience, amount);
   }
 
   public removeItemFromInventory(item: Item): void {
@@ -134,8 +156,9 @@ export class AdventurerService {
 
     const generateAdventurerDto: GenerateAdventurerDto = {};
 
-    if (this.additionalGenerationInfos())
+    if (this.additionalGenerationInfos()) {
       generateAdventurerDto.additionalGenerationInfos = this.additionalGenerationInfos();
+    }
 
     const response = await fetch(`${this.apiUrl}/generate`, {
       signal: abortSignal,
@@ -144,6 +167,40 @@ export class AdventurerService {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(generateAdventurerDto),
+    });
+
+    if (!response.ok) throw new Error('Unable to load new adventurer');
+    return response.json();
+  }
+
+  private async fetchLevelUp(request: unknown, abortSignal: AbortSignal): Promise<Adventurer | undefined> {
+    console.log('checking level up');
+
+    if(!this.needLevelUp()){
+      return undefined;
+    }
+
+    const adventurer = this.adventurer();
+
+    if(!adventurer){
+      return undefined;
+    }
+
+    const adventurerLevelUpDto: AdventurerLevelUpDto = {
+      adventurer: adventurer,
+      levelUpExperience: adventurer.levelUpExperience,
+      experience: adventurer.experience
+    }
+
+
+    console.log('fetching level up');
+    const response = await fetch(`${this.apiUrl}/levelup`, {
+      signal: abortSignal,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(adventurerLevelUpDto),
     });
 
     if (!response.ok) throw new Error('Unable to load new adventurer');

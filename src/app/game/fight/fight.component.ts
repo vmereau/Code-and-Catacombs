@@ -119,7 +119,7 @@ export class FightComponent {
       this.addCombatLog(`${target()?.name}: ${skillEffect.targetProperty} ${skillEffect.value}`);
     });
 
-    this.adventurerService.updateStats(CharacterUpdatableNumberProperties.currentMana, -skill.cost);
+    this.adventurerService.updateStat(CharacterUpdatableNumberProperties.currentMana, -skill.cost);
     this.addCombatLog(`${this.adventurer()?.name} casted ${skill.name} successfully !`);
     this.toggleUseSkillsVisible();
     this.playerTurn.set(false);
@@ -198,10 +198,10 @@ export class FightComponent {
     const experienceGiven = this.monster()?.experienceGiven || 1;
     const goldGiven = this.monster()?.goldGiven || 1;
 
-    this.adventurerService.updateStats(AdventurerUpdatableNumberProperties.experience, experienceGiven);
+    this.adventurerService.giveExperience(experienceGiven);
     this.addCombatLog(`${this.adventurer()?.name} gains ${experienceGiven} exp`);
 
-    this.adventurerService.updateStats(AdventurerUpdatableNumberProperties.gold, goldGiven);
+    this.adventurerService.addGold(goldGiven);
     this.addCombatLog(`${this.adventurer()?.name} gains ${goldGiven} gold`);
 
     this.isWon.set(true);

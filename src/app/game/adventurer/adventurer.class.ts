@@ -28,6 +28,18 @@ export class Adventurer extends Character {
   }
 }
 
+export class AdventurerLevelUpDto {
+  adventurer: Adventurer;
+  experience: number;
+  levelUpExperience: number;
+
+  constructor(adventurer: Adventurer, experience: number, levelUpExperience: number) {
+    this.adventurer = adventurer;
+    this.experience = experience;
+    this.levelUpExperience = levelUpExperience;
+  }
+}
+
 export class GenerateAdventurerDto {
   additionalGenerationInfos?: string;
 
@@ -39,4 +51,5 @@ export class GenerateAdventurerDto {
 export enum AdventurerUpdatableNumberProperties {
   experience = 'experience',
   gold = 'gold',
+  level = 'level'
 }
