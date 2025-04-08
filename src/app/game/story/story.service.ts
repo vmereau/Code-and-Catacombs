@@ -67,8 +67,6 @@ export class StoryService {
     });
 
     if (!response.ok) throw new Error('Unable to load the story img');
-    console.log(response.json());
     return response.json();
   }
-
 }

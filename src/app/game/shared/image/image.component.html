@@ -1,0 +1,3 @@
+@if(!isImgLoading() && !isImgError() && img()) {
+  <img [src]="'data:image/png;base64,' + img().candidates[0].content.parts[0].inlineData.data"/>
+}

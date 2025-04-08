@@ -13,10 +13,11 @@ import { InputText } from 'primeng/inputtext';
 import { Story } from '../story.class';
 import { StoryService } from '../story.service';
 import {NgOptimizedImage} from '@angular/common';
+import {ImageComponent} from '../../shared/image/image.component';
 
 @Component({
   selector: 'app-story',
-  imports: [InputText, FormsModule, Button, NgOptimizedImage],
+  imports: [InputText, FormsModule, Button, NgOptimizedImage, ImageComponent],
   templateUrl: './choose-story.component.html',
   standalone: true,
   styleUrl: './choose-story.component.scss',
@@ -31,6 +32,7 @@ export class ChooseStoryComponent {
 
   public storyImg: Signal<any | undefined>;
   public isStoryImgLoading: Signal<boolean>;
+  public isStoryImgError: Signal<unknown>;
 
   @Output() storySelected = new EventEmitter<boolean>();
 
@@ -42,6 +44,7 @@ export class ChooseStoryComponent {
 
     this.storyImg = this.storyService.storyImg;
     this.isStoryImgLoading = this.storyService.isStoryImgLoading;
+    this.isStoryImgError = this.storyService.isStoryImgError;
   }
 
   public loadNewStory() {
