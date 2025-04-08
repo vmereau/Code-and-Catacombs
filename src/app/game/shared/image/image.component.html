@@ -1,3 +1,17 @@
+@if (isImgLoading()){
+  <div>
+    <p>Image loading ...</p>
+  </div>
+}
+
+@if (isImgLoading() && !isImgLoading()) {
+  <div>
+    <p>error while loading image</p>
+  </div>
+}
+
 @if(!isImgLoading() && !isImgError() && img()) {
-  <img [src]="'data:image/png;base64,' + img().candidates[0].content.parts[0].inlineData.data"/>
+  <div [class]="'size-' + imgSize">
+    <img [src]="'data:image/png;base64,' + img().candidates[0].content.parts[0].inlineData.data"/>
+  </div>
 }
