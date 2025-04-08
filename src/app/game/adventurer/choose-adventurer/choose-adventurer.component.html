@@ -1,6 +1,6 @@
 @if (isError() && !isLoading()) {
   <p>An error happened</p>
-  <button (click)="loadNewAdventurer()">Generate a new adventurer</button>
+  <ng-container *ngTemplateOutlet="generateAdventurerContainer"></ng-container>
 }
 
 @if (isLoading()) {
@@ -8,15 +8,11 @@
 }
 
 @if (adventurer() && !isLoading() && !isError()) {
-  <div class="adventurer-additional-infos-container">
-    <label for="adventurer-generate-additional-infos">Additional generation infos</label>
-    <input id="adventurer-generate-additional-infos" type="text" pInputText [(ngModel)]="additionalGenerationInfos"/>
-    <small id="adventurer-generate-additional-infos-help">Add details for the AI to build around or include in your adventurer.</small>
-  </div>
-  <p-button (click)="loadNewAdventurer()">Generate a new Adventurer</p-button>
+  <ng-container *ngTemplateOutlet="generateAdventurerContainer"></ng-container>
 
   <div class="choose-adventurer-infos">
     <h2>{{ adventurer()?.name }}</h2>
+    <app-image [img]="adventurerImg" [isImgLoading]="isAdventurerImgLoading" [isImgError]="isAdventurerImgError"></app-image>
     <br />
     <p>{{ adventurer()?.description }}</p>
     <br />
@@ -36,3 +32,12 @@
 
   <p-button (click)="chooseAdventurer()">Choose this adventurer</p-button>
 }
+
+<ng-template #generateAdventurerContainer>
+  <div class="adventurer-additional-infos-container">
+    <label for="adventurer-generate-additional-infos">Additional generation infos</label>
+    <input id="adventurer-generate-additional-infos" type="text" pInputText [(ngModel)]="additionalGenerationInfos"/>
+    <small id="adventurer-generate-additional-infos-help">Add details for the AI to build around or include in your adventurer.</small>
+  </div>
+  <p-button (click)="loadNewAdventurer()">Generate a new Adventurer</p-button>
+</ng-template>

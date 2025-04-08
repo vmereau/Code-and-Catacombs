@@ -34,9 +34,18 @@ export class AdventurerService {
     loader: async ({ request, abortSignal }) => this.fetchLevelUp(request, abortSignal),
   })
 
+  private adventurerImgResource = resource({
+    request: () => this.adventurer(),
+    loader: async ({ request, abortSignal }) => this.fetchAdventurerImg(request, abortSignal),
+  });
+
   public adventurer = linkedSignal(() => this.adventurerResource.value());
   public isAdventurerLoading: Signal<boolean> = computed(() => this.adventurerResource.isLoading());
   public isAdventurerError: Signal<unknown> = computed(() => this.adventurerResource.error());
+
+  public adventurerImg: Signal<any | undefined> = computed(() => this.adventurerImgResource.value());
+  public isAdventurerImgLoading: Signal<boolean> = computed(() => this.adventurerImgResource.isLoading());
+  public isAdventurerImgError: Signal<unknown> = computed(() => this.adventurerImgResource.error());
 
   private inventory: WritableSignal<Item[]> = signal([]);
 
@@ -204,6 +213,26 @@ export class AdventurerService {
     });
 
     if (!response.ok) throw new Error('Unable to load new adventurer');
+    return response.json();
+  }
+
+  private async fetchAdventurerImg(request: unknown, abortSignal: AbortSignal): Promise<any> {
+    console.log('generating a new adventurer img...');
+
+    if(!this.adventurer()){
+      return undefined;
+    }
+
+    const response = await fetch(`${this.apiUrl}/generate-img`, {
+      signal: abortSignal,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(this.adventurer()),
+    });
+
+    if (!response.ok) throw new Error('Unable to load the adventurer img');
     return response.json();
   }
 }
