@@ -27,5 +27,10 @@
     <p>Boss: {{ story()?.boss_name }}</p>
   </div>
 
+  @if(!isStoryImgLoading() && storyImg()) {
+    <img [ngSrc]="'data:image/png;base64,' + storyImg().candidates[0].content.parts.inlineData.data"/>
+  }
+
+
   <p-button (click)="storySelected.emit(true)">Choose this story</p-button>
 }
