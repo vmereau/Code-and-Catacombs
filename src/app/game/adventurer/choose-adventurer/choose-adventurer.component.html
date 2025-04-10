@@ -4,7 +4,7 @@
 }
 
 @if (isLoading()) {
-  <p>Adventurer is generating, please wait</p>
+  <app-loader [loadingText]="'Adventurer is generating, please wait'"></app-loader>
 }
 
 @if (adventurer() && !isLoading() && !isError()) {

@@ -14,10 +14,11 @@ import { Story } from '../story.class';
 import { StoryService } from '../story.service';
 import {NgOptimizedImage} from '@angular/common';
 import {ImageComponent} from '../../shared/image/image.component';
+import {LoaderComponent} from '../../shared/loader/loader.component';
 
 @Component({
   selector: 'app-story',
-  imports: [InputText, FormsModule, Button, NgOptimizedImage, ImageComponent],
+  imports: [InputText, FormsModule, Button, NgOptimizedImage, ImageComponent, LoaderComponent],
   templateUrl: './choose-story.component.html',
   standalone: true,
   styleUrl: './choose-story.component.scss',

@@ -1,21 +1,193 @@
-.story-premise-container {
-  display: flex;
-  flex-direction: column;
-  width: 25rem;
-  margin-bottom: 1rem;
+@use "sass:color";
+
+$primary-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; // Consistent font
+$primary-color: #333;             // Dark gray for main text
+$secondary-color: #777;           // Medium gray for secondary text
+$accent-color: #007bff;           // Classic blue accent
+$light-background: #f9f9f9;      // Very light gray background
+$card-background: #fff;           // White for container background
+$border-radius: 4px;              // Soft border radius
+$box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); // Subtle box shadow
+$error-color: #dc3545;            // Red for error messages
+$container-max-width: 600px;       // Max width for containers to prevent stretching
+
+/* ---------------- Base Container Styles (for centering) ---------------- */
+.error-container,
+.loading-container,
+.choose-story-container {
+  max-width: $container-max-width;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem; /* Add some bottom margin between states if displayed sequentially */
+  padding: 2rem;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  background-color: $card-background; /* Default container background */
 }
 
-.story-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-bottom: 1px lightgray solid;
-  border-top: 1px lightgray solid;
-  padding-bottom: 1rem;
-  margin: 1rem 0 1rem 0;
+/* ---------------- Error State Styles ---------------- */
+.error-container {
+  background-color: lighten($error-color, 45%); // Light error background
+  text-align: center;
 
-  .story-summary-container {
-    width: 40%;
+  p {
+    font-family: $primary-font;
+    color: $error-color;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+
+    &:last-child {
+      margin-bottom: 1.5rem; // More space before button
+    }
+  }
+
+  p-button {
+    /* Style PrimeNG button, or adjust for your button component */
+    button {
+      background-color: $error-color;
+      color: white;
+
+      &:hover {
+        background-color: darken($error-color, 10%);
+      }
+    }
   }
 }
 
+/* ---------------- Success State (Choose Story) Styles ---------------- */
+.choose-story-container {
+  text-align: center; /* Center align elements within container by default */
+
+  .story-premise-container {
+    margin-bottom: 2rem;
+    text-align: left; /* Revert to left align for labels and inputs for better readability */
+  }
+
+  label {
+    display: block;
+    font-family: $primary-font;
+    font-weight: bold;
+    color: $primary-color;
+    margin-bottom: 0.5rem;
+  }
+
+  input#story-premise {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid $secondary-color;
+    border-radius: $border-radius;
+    font-family: $primary-font;
+    font-size: 1rem;
+    color: $primary-color;
+    box-sizing: border-box; // Important for width including padding/border
+    max-width: 100%; /* Ensure input doesn't exceed container width */
+    margin-left: auto;
+    margin-right: auto;
+
+    &:focus {
+      outline: none;
+      border-color: $accent-color;
+      box-shadow: 0 0 0 2px rgba($accent-color, 0.2);
+    }
+  }
+
+  small#story-premise-help {
+    display: block;
+    font-family: $primary-font;
+    color: $secondary-color;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+    text-align: left; /* Align help text to the left as well */
+  }
+
+  p-button {
+    margin-bottom: 2rem;
+    display: block; /* Full width button */
+    text-align: center;
+
+    button {
+      width: 100%; /* Make button full width */
+      max-width: 100%; /* Ensure button doesn't exceed container width */
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      background-color: $accent-color;
+      color: white;
+      border: none;
+      border-radius: $border-radius;
+      cursor: pointer;
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      box-shadow: none; // No shadow for a flatter button
+      margin-left: auto;
+      margin-right: auto;
+
+
+      &:hover {
+        background-color: color.adjust($accent-color, $lightness: -10%);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba($accent-color, 0.5);
+      }
+
+      &:active {
+        background-color: color.adjust($accent-color, $lightness: -20%);
+      }
+    }
+  }
+
+
+  .story-container {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  h2 {
+    font-family: $primary-font;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: $primary-color;
+    margin-bottom: 1rem;
+  }
+
+  app-image {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 1rem auto; /* Center image and add bottom margin */
+    max-width: 100%; /* Ensure image doesn't exceed container width */
+  }
+
+  p {
+    font-family: $primary-font;
+    color: $primary-color;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .story-summary-container {
+    background-color: $light-background;
+    padding: 1.2rem;
+    border-radius: $border-radius;
+    text-align: left; /* Story summaries are usually more readable left-aligned */
+    font-family: $primary-font;
+    color: $primary-color;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 100%; /* Ensure summary box doesn't exceed container width */
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* "Choose this story" button below story details */
+  p-button:last-of-type {
+    margin-top: 1.5rem; /* Space from story details */
+    margin-bottom: 0; /* Reset bottom margin */
+    button {
+      /* Inherits button styles from above p-button but can be further customized if needed */
+    }
+  }
+}

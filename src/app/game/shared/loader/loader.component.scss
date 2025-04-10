@@ -1,0 +1,47 @@
+@use "sass:color";
+
+$primary-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; // Consistent font
+$secondary-color: #777;           // Medium gray for secondary text
+$accent-color: #007bff;           // Classic blue accent
+$light-background: #f9f9f9;      // Very light gray background
+$card-background: #fff;           // White for container background
+$border-radius: 4px;              // Soft border radius
+$box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); // Subtle box shadow
+$loading-indicator-color: $accent-color; // Color for loading indicator
+$container-max-width: 600px;       // Max width for containers to prevent stretching
+
+/* ---------------- Loading State Styles with Animation ---------------- */
+.loading-container {
+  text-align: center;
+  max-width: $container-max-width;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem; /* Add some bottom margin between states if displayed sequentially */
+  padding: 2rem;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  background-color: $card-background; /* Default container background */
+
+  p {
+    font-family: $primary-font;
+    color: $secondary-color;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Loading Spinner Animation */
+  &::after {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 3px solid $light-background;
+    border-top-color: $loading-indicator-color;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+}

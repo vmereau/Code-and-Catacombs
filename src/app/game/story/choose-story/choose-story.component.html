@@ -1,34 +1,38 @@
 @if (isError() && !isLoading()) {
-  <p>An error happened</p>
-  <p-button (click)="loadNewStory()">Generate a new story</p-button>
+  <div class="error-container">
+    <p>An error happened</p>
+    <p-button (click)="loadNewStory()">Generate a new story</p-button>
+  </div>
 }
 
 @if (isLoading()) {
-  <p>Story is generating, please wait</p>
+  <app-loader [loadingText]="'Generating Story...'"></app-loader>
 }
 
 @if (!isLoading() && !isError() && story()) {
-  <div class="story-premise-container">
-    <label for="story-premise">Story Premise</label>
-    <input id="story-premise" type="text" pInputText [(ngModel)]="premise"/>
-    <small id="story-premise-help">Add details for the AI to build around or include in your story.</small>
-  </div>
-  <p-button (click)="loadNewStory()">Generate a new story</p-button>
-
-  <div class="story-container">
-    <h2>{{ story()?.name }}</h2>
-
-    <app-image [img]="storyImg" [isImgError]="isStoryImgError" [isImgLoading]="isStoryImgLoading"></app-image>
-    <br />
-    <p>Biome: {{ story()?.biome }}</p>
-    <br />
-    <div class="story-summary-container">
-      {{ story()?.story_summary }}
+  <div class="choose-story-container">
+    <div class="story-premise-container">
+      <label for="story-premise">Story Premise</label>
+      <input id="story-premise" type="text" pInputText [(ngModel)]="premise"/>
+      <small id="story-premise-help">Add details for the AI to build around or include in your story.</small>
     </div>
-    <br />
-    <p>Boss: {{ story()?.boss_name }}</p>
+    <p-button (click)="loadNewStory()">Generate a new story</p-button>
+
+    <div class="story-container">
+      <h2>{{ story()?.name }}</h2>
+
+      <app-image [img]="storyImg" [isImgError]="isStoryImgError" [isImgLoading]="isStoryImgLoading"></app-image>
+      <br />
+      <p>Biome: {{ story()?.biome }}</p>
+      <br />
+      <div class="story-summary-container">
+        {{ story()?.story_summary }}
+      </div>
+      <br />
+      <p>Boss: {{ story()?.boss_name }}</p>
+    </div>
+
+
+    <p-button (click)="storySelected.emit(true)">Choose this story</p-button>
   </div>
-
-
-  <p-button (click)="storySelected.emit(true)">Choose this story</p-button>
 }

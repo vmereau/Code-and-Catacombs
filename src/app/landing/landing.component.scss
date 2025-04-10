@@ -1,0 +1,98 @@
+@use "sass:color";
+
+$primary-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; // A clean, flat-design font
+$primary-color: #333;             // Dark gray for main text
+$secondary-color: #777;           // Medium gray for secondary text
+$accent-color: #007bff;           // Classic blue accent for buttons and highlights
+$light-background: #f9f9f9;      // Very light gray background
+$card-background: #fff;           // White for container background
+$border-radius: 4px;              // Soft border radius
+$box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); // Subtle box shadow
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); /* Or choose another modern font from Google Fonts if preferred */
+
+.landing-page-container {
+  font-family: $primary-font;
+  background-color: $card-background;
+  color: $primary-color;
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  border-radius: $border-radius;
+  box-shadow: $box_shadow;
+  text-align: center;
+}
+
+.landing-header {
+  margin-bottom: 2rem;
+
+  h1 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: $primary-color;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 1rem;
+    font-weight: normal;
+    color: $secondary-color;
+    opacity: 0.8;
+  }
+}
+
+.landing-content {
+  margin-bottom: 2rem;
+}
+
+.scroll-box {
+  background-color: $light-background;
+  padding: 1.5rem;
+  border-radius: $border-radius;
+  text-align: left;
+}
+
+.landing-content p {
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  color: $primary-color;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.landing-footer {
+  // Footer styling - mainly for button placement
+}
+
+.start-button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: $accent-color;
+  color: white;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: none; // No shadow for a flatter button
+
+  &:hover {
+    background-color: color.adjust($accent-color, $lightness: -10%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Subtle shadow on hover for feedback
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba($accent-color, 0.5); // Focus ring
+  }
+
+  &:active {
+    background-color: color.adjust($accent-color, $lightness: -20%);
+  }
+}

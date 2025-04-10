@@ -1,17 +1,15 @@
 @if (isImgLoading()){
-  <div>
-    <p>Image loading ...</p>
-  </div>
+  <app-loader [loadingText]="'Generating Image...'"></app-loader>
 }
 
 @if (isImgError() && !isImgLoading()) {
-  <div>
+  <div class="error-container">
     <p>error while loading image</p>
   </div>
 }
 
 @if(!isImgLoading() && !isImgError() && img()) {
-  <div [class]="'size-' + imgSize">
+  <div  [class]="'image-container size-' + imgSize">
     <img [src]="'data:image/png;base64,' + img().candidates[0].content.parts[0].inlineData.data"/>
   </div>
 }

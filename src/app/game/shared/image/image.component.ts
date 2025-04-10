@@ -1,11 +1,17 @@
 import {ChangeDetectionStrategy, Component, Input, signal, Signal} from '@angular/core';
+import {LoaderComponent} from '../loader/loader.component';
 export enum ImageSizes {
-  Default = "default"
+  Medium = "medium",
+  Small = "small",
+  Large = "large",
+  Full = "full",
 }
 
 @Component({
   selector: 'app-image',
-  imports: [],
+  imports: [
+    LoaderComponent
+  ],
   templateUrl: './image.component.html',
   standalone: true,
   styleUrl: './image.component.scss',
@@ -16,5 +22,5 @@ export class ImageComponent {
   @Input() public isImgLoading: Signal<boolean> =  signal(false);
   @Input() public isImgError: Signal<unknown> =  signal(false);
 
-  @Input() public imgSize: ImageSizes = ImageSizes.Default;
+  @Input() public imgSize: ImageSizes = ImageSizes.Large;
 }

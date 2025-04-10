@@ -1,5 +1,57 @@
-.size-default {
-  img {
-    width: 40rem;
+$primary-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; // Consistent font
+$primary-color: #333;             // Dark gray for text
+$secondary-color: #777;           // Medium gray for secondary text (optional, can be reused)
+$light-background: #f9f9f9;      // Very light gray background for containers
+$border-radius: 4px;              // Consistent border radius
+$error-color: #dc3545;            // Red for error messages
+$image-container-background: #fff; // White background for image container
+
+/* Styles for Error State */
+:host > .error-container { /* Targeting the second div when isImgError() is true */
+  padding: 1.5rem;
+  background-color: lighten($error-color, 40%); /* Light red background for error */
+  border: 1px solid $error-color;
+  border-radius: $border-radius;
+  text-align: center;
+
+  p {
+    font-family: $primary-font;
+    color: $error-color;
+    font-size: 1rem;
+    margin: 0;
+    font-weight: bold;
   }
+}
+
+/* Styles for Image Container (Success State) */
+:host > .image-container { /* Targeting the third div when image is loaded successfully */
+  background-color: $image-container-background;
+  border-radius: $border-radius;
+  overflow: hidden; /* Ensure image doesn't overflow rounded corners */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+
+  img {
+    display: block; /* Prevent extra space below image */
+    width: 100%;    /* Make image responsive within container */
+    height: auto;   /* Maintain aspect ratio */
+  }
+
+  /* Size variations - you can customize these */
+  &.size-small {
+    max-width: 200px;
+  }
+
+  &.size-medium {
+    max-width: 400px;
+  }
+
+  &.size-large {
+    max-width: 600px;
+  }
+
+  &.size-full {
+    max-width: 100%; /* Or remove max-width for full width */
+  }
+
+  /* Add more size variations as needed (size-x-large, etc.) */
 }

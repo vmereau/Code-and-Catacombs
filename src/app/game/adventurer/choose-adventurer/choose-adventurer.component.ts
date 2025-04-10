@@ -6,10 +6,11 @@ import { Adventurer } from '../adventurer.class';
 import { AdventurerService } from '../adventurer.service';
 import {ImageComponent} from '../../shared/image/image.component';
 import {NgTemplateOutlet} from '@angular/common';
+import {LoaderComponent} from '../../shared/loader/loader.component';
 
 @Component({
   selector: 'app-choose-adventurer',
-  imports: [Button, FormsModule, InputText, ImageComponent, NgTemplateOutlet],
+  imports: [Button, FormsModule, InputText, ImageComponent, NgTemplateOutlet, LoaderComponent],
   templateUrl: './choose-adventurer.component.html',
   standalone: true,
   styleUrl: './choose-adventurer.component.scss',
