@@ -1,10 +1,9 @@
 import { computed, Injectable, linkedSignal, resource, ResourceRef, Signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { CharacterUpdatableNumberProperties } from '../shared/character/character.class';
-import { StoryService } from '../story/story.service';
 import { GenerateMonstersDto, Monster } from './monster.class';
 import {FetchService} from '../shared/fetch.service';
 import {AdventurerState} from '../adventurer/adventurer-state.service';
+import {StoryState} from '../story/story-state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +16,7 @@ export class MonsterService {
   });
 
   constructor(
-    private storyService: StoryService,
+    private storyState: StoryState,
     private adventurerState: AdventurerState,
     private fetchService: FetchService
   ) {}
@@ -31,7 +30,7 @@ export class MonsterService {
   }
 
   private async fetchMonsters(request: unknown, abortSignal: AbortSignal): Promise<Monster[] | undefined> {
-    const story = this.storyService.story();
+    const story = this.storyState.story();
     if (!story) {
       return undefined;
     }

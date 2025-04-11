@@ -1,9 +1,9 @@
 import { Injectable, resource, } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { StoryService } from '../story/story.service';
 import { GenerateShopDto, Shop } from './shop.class';
 import {FetchService} from '../shared/fetch.service';
 import {AdventurerState} from '../adventurer/adventurer-state.service';
+import {StoryState} from '../story/story-state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,7 @@ export class ShopService {
 
   constructor(
     private adventurerState: AdventurerState,
-    private storyService: StoryService,
+    private storyState: StoryState,
     private fetchService: FetchService
   ) {}
 
@@ -39,7 +39,7 @@ export class ShopService {
       numberOfItems: 3,
     };
 
-    const biome = this.storyService.story()?.biome;
+    const biome = this.storyState.story()?.biome;
 
     if (biome) generateShopDto.biome = biome;
 

@@ -15,6 +15,7 @@ import { StoryService } from '../story.service';
 import {NgOptimizedImage} from '@angular/common';
 import {ImageComponent} from '../../shared/image/image.component';
 import {LoaderComponent} from '../../shared/loader/loader.component';
+import {StoryState} from '../story-state.service';
 
 @Component({
   selector: 'app-story',
@@ -37,15 +38,16 @@ export class ChooseStoryComponent {
 
   @Output() storySelected = new EventEmitter<boolean>();
 
-  constructor(private storyService: StoryService) {
-    this.story = this.storyService.story;
-    this.isLoading = this.storyService.isStoryLoading;
-    this.isError = this.storyService.isStoryError;
+  constructor(private storyState: StoryState,
+              private storyService: StoryService) {
+    this.story = this.storyState.story;
+    this.isLoading = this.storyState.isStoryLoading;
+    this.isError = this.storyState.isStoryError;
     this.premise = this.storyService.premise;
 
-    this.storyImg = this.storyService.storyImg;
-    this.isStoryImgLoading = this.storyService.isStoryImgLoading;
-    this.isStoryImgError = this.storyService.isStoryImgError;
+    this.storyImg = this.storyState.storyImg;
+    this.isStoryImgLoading = this.storyState.isStoryImgLoading;
+    this.isStoryImgError = this.storyState.isStoryImgError;
   }
 
   public loadNewStory() {

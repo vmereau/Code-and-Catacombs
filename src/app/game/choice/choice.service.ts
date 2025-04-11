@@ -1,9 +1,9 @@
 import { computed, Injectable, resource, ResourceRef, signal, Signal, WritableSignal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { mockChoices } from '../../../mocks/choices.mock';
-import { StoryService } from '../story/story.service';
 import { Choice } from './choice.class';
 import {FetchService} from '../shared/fetch.service';
+import {StoryState} from '../story/story-state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,7 @@ export class ChoiceService {
     loader: async ({ request, abortSignal }) => this.fetchChoices(request, abortSignal),
   });
 
-  constructor(private storyService: StoryService,
+  constructor(private storyState: StoryState,
               private fetchService: FetchService) {}
 
   public generateNewChoices(nb: number) {
@@ -27,7 +27,7 @@ export class ChoiceService {
 
   // Function to fetch the story
   private async fetchChoices(request: unknown, abortSignal: AbortSignal): Promise<Choice[] | undefined> {
-    const story = this.storyService.story();
+    const story = this.storyState.story();
     if (!story) {
       return undefined;
     }

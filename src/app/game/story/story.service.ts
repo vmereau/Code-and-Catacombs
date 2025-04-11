@@ -9,22 +9,14 @@ import {FetchService} from '../shared/fetch.service';
 export class StoryService {
   private apiUrl = `${environment.api.baseUrl}/story`;
 
-  private storyResource = resource({
-    loader: async ({ request, abortSignal }) => this.fetchStory(request, abortSignal),
+  public storyResource = resource({
+    loader: async ({ request, abortSignal }) => this.fetchStory(abortSignal),
   });
 
-  private storyImgResource = resource({
-    request: () => this.story(),
-    loader: async ({ request, abortSignal }) => this.fetchStoryImg(request, abortSignal),
+  public storyImgResource = resource({
+    request: () => this.storyResource.value(),
+    loader: async ({ request, abortSignal }) => this.fetchStoryImg(this.storyResource.value(), abortSignal),
   });
-
-  public story: Signal<Story | undefined> = computed(() => this.storyResource.value());
-  public isStoryLoading: Signal<boolean> = computed(() => this.storyResource.isLoading());
-  public isStoryError: Signal<unknown> = computed(() => this.storyResource.error());
-
-  public storyImg: Signal<any | undefined> = computed(() => this.storyImgResource.value());
-  public isStoryImgLoading: Signal<boolean> = computed(() => this.storyImgResource.isLoading());
-  public isStoryImgError: Signal<unknown> = computed(() => this.storyImgResource.error());
 
   public premise: WritableSignal<string | undefined> = signal(undefined);
 
@@ -34,7 +26,7 @@ export class StoryService {
     this.storyResource.reload();
   }
 
-  private async fetchStory(request: unknown, abortSignal: AbortSignal): Promise<Story> {
+  private async fetchStory(abortSignal: AbortSignal): Promise<Story> {
     console.log('generating a new story...');
 
     const generateStoryDto: GenerateStoryDto = {};
@@ -43,13 +35,13 @@ export class StoryService {
     return this.fetchService.fetch(`${this.apiUrl}/generate`, 'POST', abortSignal, generateStoryDto);
   }
 
-  private async fetchStoryImg(request: unknown, abortSignal: AbortSignal): Promise<any> {
-    if(!this.story()){
+  private async fetchStoryImg(story: Story | undefined, abortSignal: AbortSignal): Promise<any> {
+    if(!story){
       return undefined;
     }
 
     console.log('generating a new story img...');
 
-    return this.fetchService.fetch(`${this.apiUrl}/generate-img`, 'POST', abortSignal, this.story());
+    return this.fetchService.fetch(`${this.apiUrl}/generate-img`, 'POST', abortSignal, story);
   }
 }
