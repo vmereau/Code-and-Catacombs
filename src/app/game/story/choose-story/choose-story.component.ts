@@ -18,7 +18,7 @@ import {LoaderComponent} from '../../shared/loader/loader.component';
 
 @Component({
   selector: 'app-story',
-  imports: [InputText, FormsModule, Button, NgOptimizedImage, ImageComponent, LoaderComponent],
+  imports: [InputText, FormsModule, Button, ImageComponent, LoaderComponent],
   templateUrl: './choose-story.component.html',
   standalone: true,
   styleUrl: './choose-story.component.scss',

@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $primary-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; // Consistent font
 $primary-color: #333;             // Dark gray for text
 $secondary-color: #777;           // Medium gray for secondary text (optional, can be reused)
@@ -9,7 +11,7 @@ $image-container-background: #fff; // White background for image container
 /* Styles for Error State */
 :host > .error-container { /* Targeting the second div when isImgError() is true */
   padding: 1.5rem;
-  background-color: lighten($error-color, 40%); /* Light red background for error */
+  background-color: color.adjust($error-color, $lightness: 40%); /* Light red background for error */
   border: 1px solid $error-color;
   border-radius: $border-radius;
   text-align: center;

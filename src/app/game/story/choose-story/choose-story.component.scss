@@ -27,7 +27,7 @@ $container-max-width: 600px;       // Max width for containers to prevent stretc
 
 /* ---------------- Error State Styles ---------------- */
 .error-container {
-  background-color: lighten($error-color, 45%); // Light error background
+  background-color: color.adjust($error-color, $lightness: 45%); // Light error background
   text-align: center;
 
   p {
@@ -48,7 +48,7 @@ $container-max-width: 600px;       // Max width for containers to prevent stretc
       color: white;
 
       &:hover {
-        background-color: darken($error-color, 10%);
+        background-color: color.adjust($error-color, $lightness: -10%);
       }
     }
   }
