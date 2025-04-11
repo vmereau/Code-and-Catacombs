@@ -7,6 +7,7 @@ import { AdventurerService } from '../adventurer.service';
 import {ImageComponent} from '../../shared/image/image.component';
 import {NgTemplateOutlet} from '@angular/common';
 import {LoaderComponent} from '../../shared/loader/loader.component';
+import {AdventurerState} from '../adventurer-state.service';
 
 @Component({
   selector: 'app-choose-adventurer',
@@ -29,20 +30,21 @@ export class ChooseAdventurerComponent {
 
   @Output() adventurerSelected = new EventEmitter<boolean>();
 
-  constructor(private adventurerService: AdventurerService) {
-    this.adventurer = this.adventurerService.adventurer;
-    this.isLoading = this.adventurerService.isAdventurerLoading;
-    this.isError = this.adventurerService.isAdventurerError;
+  constructor(private adventurerState: AdventurerState,
+              private adventurerService: AdventurerService) {
+    this.adventurer = this.adventurerState.adventurer;
+    this.isLoading = this.adventurerState.isAdventurerLoading;
+    this.isError = this.adventurerState.isAdventurerError;
 
-    this.adventurerImg = this.adventurerService.adventurerImg;
-    this.isAdventurerImgLoading = this.adventurerService.isAdventurerImgLoading;
-    this.isAdventurerImgError = this.adventurerService.isAdventurerImgError;
+    this.adventurerImg = this.adventurerState.adventurerImg;
+    this.isAdventurerImgLoading = this.adventurerState.isAdventurerImgLoading;
+    this.isAdventurerImgError = this.adventurerState.isAdventurerImgError;
 
     this.additionalGenerationInfos = this.adventurerService.additionalGenerationInfos;
   }
 
   public chooseAdventurer() {
-    this.adventurerService.setInitialValues();
+    this.adventurerState.setInitialValues();
     this.adventurerSelected.emit(true);
   }
 

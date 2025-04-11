@@ -12,8 +12,7 @@ import {
 } from '@angular/core';
 import { Button } from 'primeng/button';
 import { Dialog } from 'primeng/dialog';
-import { Adventurer, AdventurerUpdatableNumberProperties } from '../adventurer/adventurer.class';
-import { AdventurerService } from '../adventurer/adventurer.service';
+import { Adventurer } from '../adventurer/adventurer.class';
 import { Monster } from '../monster/monster.class';
 import { MonsterService } from '../monster/monster.service';
 import { CharacterUpdatableNumberProperties } from '../shared/character/character.class';
@@ -23,6 +22,7 @@ import { Item, ItemEffect } from '../shared/items/item.class';
 import { SkillInfoComponent } from '../skill/skill-info/skill-info.component';
 import { Skill, SkillTargetCharacterEnum } from '../skill/skill.class';
 import { SkillService } from '../skill/skill.service';
+import {AdventurerState} from '../adventurer/adventurer-state.service';
 
 @Component({
   selector: 'app-fight',
@@ -62,16 +62,16 @@ export class FightComponent {
 
   constructor(
     private monsterService: MonsterService,
-    private adventurerService: AdventurerService,
+    private adventurerState: AdventurerState,
     private skillService: SkillService,
   ) {
     this.monster = this.monsterService.monster;
     this.isLoading = this.monsterService.isMonsterLoading;
     this.isError = this.monsterService.isMonsterError;
 
-    this.adventurer = this.adventurerService.adventurer;
+    this.adventurer = this.adventurerState.adventurer;
     this.adventurerSkills = this.skillService.adventurerSkills;
-    this.adventurerConsumables = this.adventurerService.consumables;
+    this.adventurerConsumables = this.adventurerState.consumables;
 
     const endOfFightCheckEffect = effect(() => {
       this.checkEndOfFight(endOfFightCheckEffect);
@@ -119,7 +119,7 @@ export class FightComponent {
       this.addCombatLog(`${target()?.name}: ${skillEffect.targetProperty} ${skillEffect.value}`);
     });
 
-    this.adventurerService.updateStat(CharacterUpdatableNumberProperties.currentMana, -skill.cost);
+    this.adventurerState.updateStat(CharacterUpdatableNumberProperties.currentMana, -skill.cost);
     this.addCombatLog(`${this.adventurer()?.name} casted ${skill.name} successfully !`);
     this.toggleUseSkillsVisible();
     this.playerTurn.set(false);
@@ -138,7 +138,7 @@ export class FightComponent {
       updateCharacterStats(this.adventurer, effect.targetProperty, effect.value);
     });
 
-    this.adventurerService.removeItemFromInventory(item);
+    this.adventurerState.removeItemFromInventory(item);
     this.addCombatLog(`${this.adventurer()?.name} used ${item.name} successfully !`);
     this.toggleUseConsumableVisible();
     this.playerTurn.set(false);
@@ -198,10 +198,10 @@ export class FightComponent {
     const experienceGiven = this.monster()?.experienceGiven || 1;
     const goldGiven = this.monster()?.goldGiven || 1;
 
-    this.adventurerService.giveExperience(experienceGiven);
+    this.adventurerState.giveExperience(experienceGiven);
     this.addCombatLog(`${this.adventurer()?.name} gains ${experienceGiven} exp`);
 
-    this.adventurerService.addGold(goldGiven);
+    this.adventurerState.addGold(goldGiven);
     this.addCombatLog(`${this.adventurer()?.name} gains ${goldGiven} gold`);
 
     this.isWon.set(true);

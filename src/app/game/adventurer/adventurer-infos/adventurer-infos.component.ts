@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Signal, WritableSignal } from '@angular/core';
 import { Item } from '../../shared/items/item.class';
 import { Adventurer } from '../adventurer.class';
-import { AdventurerService } from '../adventurer.service';
 import { ShowInventoryComponent } from './show-inventory/show-inventory.component';
+import {AdventurerState} from '../adventurer-state.service';
 
 @Component({
   selector: 'app-adventurer-infos',
@@ -17,9 +17,9 @@ export class AdventurerInfosComponent {
   public equipment: Signal<Item[]>;
   public consumables: Signal<Item[]>;
 
-  constructor(private adventurerService: AdventurerService) {
-    this.adventurer = this.adventurerService.adventurer;
-    this.equipment = this.adventurerService.equipment;
-    this.consumables = this.adventurerService.consumables;
+  constructor(private adventurerState: AdventurerState) {
+    this.adventurer = this.adventurerState.adventurer;
+    this.equipment = this.adventurerState.equipment;
+    this.consumables = this.adventurerState.consumables;
   }
 }

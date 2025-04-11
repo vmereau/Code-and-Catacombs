@@ -1,10 +1,10 @@
 import { computed, Injectable, linkedSignal, resource, Signal, WritableSignal } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { AdventurerService } from '../adventurer/adventurer.service';
 import { Character } from '../shared/character/character.class';
 import { StoryService } from '../story/story.service';
 import { GenerateShopDto, Shop } from './shop.class';
 import {FetchService} from '../shared/fetch.service';
+import {AdventurerState} from '../adventurer/adventurer-state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +28,7 @@ export class ShopService {
   });
 
   constructor(
-    private adventurerService: AdventurerService,
+    private adventurerState: AdventurerState,
     private storyService: StoryService,
     private fetchService: FetchService
   ) {}
@@ -38,7 +38,7 @@ export class ShopService {
   }
 
   private async fetchShop(request: unknown, abortSignal: AbortSignal): Promise<Shop | undefined> {
-    const adventurer = this.adventurerService.adventurer();
+    const adventurer = this.adventurerState.adventurer();
     if (!adventurer) {
       return undefined;
     }

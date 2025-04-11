@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output, Signal } from '@angular/core';
 import { Button } from 'primeng/button';
-import { AdventurerService } from '../adventurer/adventurer.service';
 import { ItemInfosComponent } from '../shared/items/item-infos/item-infos.component';
 import { Item } from '../shared/items/item.class';
 import { Shop } from './shop.class';
 import { ShopService } from './shop.service';
+import {AdventurerState} from '../adventurer/adventurer-state.service';
 
 @Component({
   selector: 'app-shop',
@@ -23,7 +23,7 @@ export class ShopComponent {
 
   constructor(
     private shopService: ShopService,
-    private adventurerService: AdventurerService,
+    private adventurerState: AdventurerState,
   ) {
     this.shop = this.shopService.shop;
     this.isLoading = this.shopService.isShopLoading;
@@ -35,13 +35,13 @@ export class ShopComponent {
       return false;
     }
 
-    this.adventurerService.addToInventory(item);
-    this.adventurerService.withdrawGold(item.cost);
+    this.adventurerState.addToInventory(item);
+    this.adventurerState.withdrawGold(item.cost);
     return true;
   }
 
   public canBuy(amount: number): boolean {
-    const gold = this.adventurerService.adventurer()?.gold || 0;
+    const gold = this.adventurerState.adventurer()?.gold || 0;
 
     return gold >= amount;
   }

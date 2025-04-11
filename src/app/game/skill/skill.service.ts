@@ -1,8 +1,8 @@
 import { Injectable, resource, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { AdventurerService } from '../adventurer/adventurer.service';
 import { GenerateSkillDto, Skill } from './skill.class';
 import {FetchService} from '../shared/fetch.service';
+import {AdventurerState} from '../adventurer/adventurer-state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,7 @@ export class SkillService {
   private apiUrl = `${environment.api.baseUrl}/skill`;
   public adventurerSkills = signal<Skill[]>([]);
 
-  constructor(private adventurerService: AdventurerService,
+  constructor(private adventurerState: AdventurerState,
               private fetchService: FetchService) {}
 
   public skillResource = resource({
@@ -23,8 +23,8 @@ export class SkillService {
     console.log('generating a new Skill...');
 
     const generateSkillDto: GenerateSkillDto = {
-      archetype: this.adventurerService.adventurer()?.archetype,
-      level: this.adventurerService.adventurer()?.level,
+      archetype: this.adventurerState.adventurer()?.archetype,
+      level: this.adventurerState.adventurer()?.level,
     };
 
     return this.fetchService.fetch(`${this.apiUrl}/generate`, 'POST', abortSignal, generateSkillDto);

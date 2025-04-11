@@ -1,10 +1,10 @@
 import { computed, Injectable, linkedSignal, resource, ResourceRef, Signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { AdventurerService } from '../adventurer/adventurer.service';
 import { CharacterUpdatableNumberProperties } from '../shared/character/character.class';
 import { StoryService } from '../story/story.service';
 import { GenerateMonstersDto, Monster } from './monster.class';
 import {FetchService} from '../shared/fetch.service';
+import {AdventurerState} from '../adventurer/adventurer-state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -46,7 +46,7 @@ export class MonsterService {
 
   constructor(
     private storyService: StoryService,
-    private adventurerService: AdventurerService,
+    private adventurerState: AdventurerState,
     private fetchService: FetchService
   ) {}
 
@@ -74,7 +74,7 @@ export class MonsterService {
       return undefined;
     }
 
-    const adventurer = this.adventurerService.adventurer();
+    const adventurer = this.adventurerState.adventurer();
     if (!adventurer) {
       return undefined;
     }
