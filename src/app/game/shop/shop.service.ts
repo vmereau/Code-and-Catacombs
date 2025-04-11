@@ -1,6 +1,5 @@
-import { computed, Injectable, linkedSignal, resource, Signal, WritableSignal } from '@angular/core';
+import { Injectable, resource, } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { Character } from '../shared/character/character.class';
 import { StoryService } from '../story/story.service';
 import { GenerateShopDto, Shop } from './shop.class';
 import {FetchService} from '../shared/fetch.service';
@@ -12,19 +11,8 @@ import {AdventurerState} from '../adventurer/adventurer-state.service';
 export class ShopService {
   private apiUrl = `${environment.api.baseUrl}/shop`;
 
-  private shopResource = resource({
+  public shopResource = resource({
     loader: async ({ request, abortSignal }) => this.fetchShop(request, abortSignal),
-  });
-
-  public shop: Signal<Shop | undefined> = computed(() => this.shopResource.value());
-  public isShopLoading: Signal<boolean> = computed(() => this.shopResource.isLoading());
-  public isShopError: Signal<unknown> = computed(() => this.shopResource.error());
-  public shopKeeper: WritableSignal<Character> = linkedSignal(() => {
-    const shop = this.shop();
-
-    const character = new Character('Shopkeeper', 0, shop?.shopkeeper_description || '');
-
-    return { ...character };
   });
 
   constructor(

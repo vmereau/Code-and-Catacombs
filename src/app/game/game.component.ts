@@ -13,6 +13,7 @@ import { ShopService } from './shop/shop.service';
 import { ChooseSkillComponent } from './skill/choose-skill/choose-skill.component';
 import { ChooseStoryComponent } from './story/choose-story/choose-story.component';
 import {MonsterState} from './monster/monster-state.service';
+import {ShopState} from './shop/shop-state.service';
 
 export enum GameStep {
   InitStory = 0,
@@ -53,6 +54,7 @@ export class GameComponent {
   constructor(
     private choiceService: ChoiceService,
     private shopService: ShopService,
+    private shopState: ShopState,
     private monsterState: MonsterState,
     private monsterService: MonsterService
   ) {
@@ -90,9 +92,9 @@ export class GameComponent {
           console.log('selected Shop');
           this.shopService.generateNewShop();
           this.setEncounter(
-            this.shopService.shopKeeper,
-            this.shopService.isShopLoading,
-            this.shopService.isShopError,
+            this.shopState.shopKeeper,
+            this.shopState.isShopLoading,
+            this.shopState.isShopError,
             false,
           );
           break;

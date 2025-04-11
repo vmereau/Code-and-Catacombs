@@ -5,6 +5,7 @@ import { Item } from '../shared/items/item.class';
 import { Shop } from './shop.class';
 import { ShopService } from './shop.service';
 import {AdventurerState} from '../adventurer/adventurer-state.service';
+import {ShopState} from './shop-state.service';
 
 @Component({
   selector: 'app-shop',
@@ -22,12 +23,13 @@ export class ShopComponent {
   @Output() leaveShop = new EventEmitter();
 
   constructor(
+    private shopState: ShopState,
     private shopService: ShopService,
     private adventurerState: AdventurerState,
   ) {
-    this.shop = this.shopService.shop;
-    this.isLoading = this.shopService.isShopLoading;
-    this.isError = this.shopService.isShopError;
+    this.shop = this.shopState.shop;
+    this.isLoading = this.shopState.isShopLoading;
+    this.isError = this.shopState.isShopError;
   }
 
   public buy(item: Item): boolean {
