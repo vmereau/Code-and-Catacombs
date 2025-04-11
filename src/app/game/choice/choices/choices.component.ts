@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output, Signal } from '@angular/core';
 import { ChoiceSelectionComponent } from '../choice-selection/choice-selection.component';
 import { Choice } from '../choice.class';
-import { ChoiceService } from '../choice.service';
+import {ChoiceState} from '../choice-state.service';
 
 @Component({
   selector: 'app-choices',
@@ -18,9 +18,9 @@ export class ChoicesComponent {
 
   @Output() choiceSelected = new EventEmitter<Choice>();
 
-  constructor(private choiceService: ChoiceService) {
-    this.choices = this.choiceService.choices;
-    this.isLoading = this.choiceService.isChoicesLoading;
-    this.isError = this.choiceService.isChoicesError;
+  constructor(private choiceState: ChoiceState) {
+    this.choices = this.choiceState.choices;
+    this.isLoading = this.choiceState.isChoicesLoading;
+    this.isError = this.choiceState.isChoicesError;
   }
 }

@@ -12,14 +12,10 @@ export class ChoiceService {
   private apiUrl = `${environment.api.baseUrl}/choice`;
   private numberOfChoices: WritableSignal<{ nb: number }> = signal({ nb: 3 });
 
-  private choicesResource: ResourceRef<Choice[] | undefined> = resource({
+  public choicesResource: ResourceRef<Choice[] | undefined> = resource({
     request: () => this.numberOfChoices(),
     loader: async ({ request, abortSignal }) => this.fetchChoices(request, abortSignal),
   });
-
-  public choices: Signal<Choice[] | undefined> = computed(() => this.choicesResource.value());
-  public isChoicesLoading: Signal<boolean> = computed(() => this.choicesResource.isLoading());
-  public isChoicesError: Signal<unknown> = computed(() => this.choicesResource.error());
 
   constructor(private storyService: StoryService,
               private fetchService: FetchService) {}
