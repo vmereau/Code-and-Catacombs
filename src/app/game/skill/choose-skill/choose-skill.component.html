@@ -1,15 +1,15 @@
-@if (skill.error()) {
+@if (isError()) {
   <p>An error happened</p>
-  <button (click)="skill.reload()">Generate a new skill</button>
+  <button (click)="reloadSkill()">Generate a new skill</button>
 }
 
-@if (skill.isLoading()) {
+@if (isLoading()) {
   <p>The skill is generating, please wait</p>
 }
 
-@if (skill.hasValue() && !skill.isLoading() && !skill.error()) {
-  <app-skill-info [skill]="skill.value()"></app-skill-info>
+@if (skill() && !isLoading() && !isError()) {
+  <app-skill-info [skill]="skill()"></app-skill-info>
 
-  <button (click)="skill.reload()">Generate a new skill</button>
+  <button (click)="reloadSkill()">Generate a new skill</button>
   <button (click)="selectSkill()">Choose this skill</button>
 }

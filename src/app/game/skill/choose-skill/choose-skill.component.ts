@@ -48,4 +48,8 @@ export class ChooseSkillComponent {
 
     this.skillSelected.emit(true);
   }
+
+  public reloadSkill(): void {
+    this.skillService.reloadSkill();
+  }
 }
