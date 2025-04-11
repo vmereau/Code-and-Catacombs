@@ -4,6 +4,7 @@ import { AdventurerService } from '../adventurer/adventurer.service';
 import { Character } from '../shared/character/character.class';
 import { StoryService } from '../story/story.service';
 import { GenerateShopDto, Shop } from './shop.class';
+import {FetchService} from '../shared/fetch.service';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,7 @@ export class ShopService {
   constructor(
     private adventurerService: AdventurerService,
     private storyService: StoryService,
+    private fetchService: FetchService
   ) {}
 
   public generateNewShop() {
@@ -53,16 +55,6 @@ export class ShopService {
 
     if (biome) generateShopDto.biome = biome;
 
-    const response = await fetch(`${this.apiUrl}/generate`, {
-      signal: abortSignal,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(generateShopDto),
-    });
-
-    if (!response.ok) throw new Error('Unable to load new shop');
-    return response.json();
+    return this.fetchService.fetch(`${this.apiUrl}/generate`, 'POST', abortSignal, generateShopDto);
   }
 }

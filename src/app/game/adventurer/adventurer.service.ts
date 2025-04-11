@@ -18,6 +18,7 @@ import {
   AdventurerUpdatableNumberProperties,
   GenerateAdventurerDto
 } from './adventurer.class';
+import {FetchService} from '../shared/fetch.service';
 
 @Injectable({
   providedIn: 'root',
@@ -65,7 +66,7 @@ export class AdventurerService {
     return experience / levelUpThreshold >= 1;
   })
 
-  constructor() {
+  constructor(private fetchService: FetchService) {
     const applyLevelUpEffect = effect(() => {
       const leveledUpAdventurer = this.levelUpResource.value();
 
@@ -169,17 +170,7 @@ export class AdventurerService {
       generateAdventurerDto.additionalGenerationInfos = this.additionalGenerationInfos();
     }
 
-    const response = await fetch(`${this.apiUrl}/generate`, {
-      signal: abortSignal,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(generateAdventurerDto),
-    });
-
-    if (!response.ok) throw new Error('Unable to load new adventurer');
-    return response.json();
+    return this.fetchService.fetch(`${this.apiUrl}/generate`, 'POST', abortSignal, generateAdventurerDto);
   }
 
   private async fetchLevelUp(request: unknown, abortSignal: AbortSignal): Promise<Adventurer | undefined> {
@@ -200,39 +191,18 @@ export class AdventurerService {
       levelUpExperience: adventurer.levelUpExperience,
       experience: adventurer.experience
     }
-
-
     console.log('fetching level up');
-    const response = await fetch(`${this.apiUrl}/levelup`, {
-      signal: abortSignal,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(adventurerLevelUpDto),
-    });
 
-    if (!response.ok) throw new Error('Unable to load new adventurer');
-    return response.json();
+    return this.fetchService.fetch(`${this.apiUrl}/levelup`, 'POST', abortSignal, adventurerLevelUpDto);
   }
 
   private async fetchAdventurerImg(request: unknown, abortSignal: AbortSignal): Promise<any> {
-    console.log('generating a new adventurer img...');
-
     if(!this.adventurer()){
       return undefined;
     }
 
-    const response = await fetch(`${this.apiUrl}/generate-img`, {
-      signal: abortSignal,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(this.adventurer()),
-    });
+    console.log('generating a new adventurer img...');
 
-    if (!response.ok) throw new Error('Unable to load the adventurer img');
-    return response.json();
+    return this.fetchService.fetch(`${this.apiUrl}/generate-img`, 'POST', abortSignal, this.adventurer());
   }
 }

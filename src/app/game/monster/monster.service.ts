@@ -4,6 +4,7 @@ import { AdventurerService } from '../adventurer/adventurer.service';
 import { CharacterUpdatableNumberProperties } from '../shared/character/character.class';
 import { StoryService } from '../story/story.service';
 import { GenerateMonstersDto, Monster } from './monster.class';
+import {FetchService} from '../shared/fetch.service';
 
 @Injectable({
   providedIn: 'root',
@@ -46,6 +47,7 @@ export class MonsterService {
   constructor(
     private storyService: StoryService,
     private adventurerService: AdventurerService,
+    private fetchService: FetchService
   ) {}
 
   public generateNewMonster() {
@@ -84,16 +86,6 @@ export class MonsterService {
       withPictures: false,
     };
 
-    const response = await fetch(`${this.apiUrl}/generate`, {
-      signal: abortSignal,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(generateMonsterDto),
-    });
-
-    if (!response.ok) throw new Error('Unable to load new monster');
-    return response.json();
+    return this.fetchService.fetch(`${this.apiUrl}/generate`, 'POST', abortSignal, generateMonsterDto);
   }
 }

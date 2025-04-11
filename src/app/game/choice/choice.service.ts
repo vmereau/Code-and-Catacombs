@@ -3,6 +3,7 @@ import { environment } from '../../../environments/environment';
 import { mockChoices } from '../../../mocks/choices.mock';
 import { StoryService } from '../story/story.service';
 import { Choice } from './choice.class';
+import {FetchService} from '../shared/fetch.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,8 @@ export class ChoiceService {
   public isChoicesLoading: Signal<boolean> = computed(() => this.choicesResource.isLoading());
   public isChoicesError: Signal<unknown> = computed(() => this.choicesResource.error());
 
-  constructor(private storyService: StoryService) {}
+  constructor(private storyService: StoryService,
+              private fetchService: FetchService) {}
 
   public generateNewChoices(nb: number) {
     console.log('nb:', nb);
@@ -37,22 +39,11 @@ export class ChoiceService {
     console.log('generating new choices...');
     return mockChoices;
 
-    /**const generateChoicesDto: GenerateChoicesDto = {
+   /*const generateChoicesDto: GenerateChoicesDto = {
       story: this.storyService.story(),
       numberOfChoices: this.numberOfChoices().nb
     }
 
-    const response = await fetch(`${this.apiUrl}/generate`, {
-      signal: abortSignal,
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(generateChoicesDto)
-    });
-
-    if (!response.ok) throw new Error("Unable to load new choices");
-
-    return response.json();**/
+    return this.fetchService.fetch(`${this.apiUrl}/generate`, 'POST', abortSignal, generateChoicesDto);*/
   }
 }

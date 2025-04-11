@@ -2,6 +2,7 @@ import { Injectable, resource, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { AdventurerService } from '../adventurer/adventurer.service';
 import { GenerateSkillDto, Skill } from './skill.class';
+import {FetchService} from '../shared/fetch.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,8 @@ export class SkillService {
   private apiUrl = `${environment.api.baseUrl}/skill`;
   public adventurerSkills = signal<Skill[]>([]);
 
-  constructor(private adventurerService: AdventurerService) {}
+  constructor(private adventurerService: AdventurerService,
+              private fetchService: FetchService) {}
 
   public skillResource = resource({
     loader: async ({ request, abortSignal }) => this.fetchSkill(request, abortSignal),
@@ -25,13 +27,6 @@ export class SkillService {
       level: this.adventurerService.adventurer()?.level,
     };
 
-    const response = await fetch(`${this.apiUrl}/generate`, {
-      signal: abortSignal,
-      method: 'POST',
-      body: JSON.stringify(generateSkillDto),
-    });
-
-    if (!response.ok) throw new Error('Unable to load new skill');
-    return response.json();
+    return this.fetchService.fetch(`${this.apiUrl}/generate`, 'POST', abortSignal, generateSkillDto);
   }
 }

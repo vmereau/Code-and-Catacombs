@@ -1,6 +1,7 @@
 import { computed, Injectable, resource, signal, Signal, WritableSignal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { GenerateStoryDto, Story } from './story.class';
+import {FetchService} from '../shared/fetch.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,8 @@ export class StoryService {
 
   public premise: WritableSignal<string | undefined> = signal(undefined);
 
+  constructor(private fetchService: FetchService) {}
+
   public loadNewStory(): void {
     this.storyResource.reload();
   }
@@ -37,36 +40,16 @@ export class StoryService {
     const generateStoryDto: GenerateStoryDto = {};
     if (this.premise()) generateStoryDto.premise = this.premise();
 
-    const response = await fetch(`${this.apiUrl}/generate`, {
-      signal: abortSignal,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(generateStoryDto),
-    });
-
-    if (!response.ok) throw new Error('Unable to load new story');
-    return response.json();
+    return this.fetchService.fetch(`${this.apiUrl}/generate`, 'POST', abortSignal, generateStoryDto);
   }
 
   private async fetchStoryImg(request: unknown, abortSignal: AbortSignal): Promise<any> {
-    console.log('generating a new story img...');
-
     if(!this.story()){
       return undefined;
     }
 
-    const response = await fetch(`${this.apiUrl}/generate-img`, {
-      signal: abortSignal,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(this.story()),
-    });
+    console.log('generating a new story img...');
 
-    if (!response.ok) throw new Error('Unable to load the story img');
-    return response.json();
+    return this.fetchService.fetch(`${this.apiUrl}/generate-img`, 'POST', abortSignal, this.story());
   }
 }
