@@ -1,7 +1,17 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output, ResourceRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+  ResourceRef,
+  Signal,
+  WritableSignal
+} from '@angular/core';
 import { SkillInfoComponent } from '../skill-info/skill-info.component';
 import { Skill } from '../skill.class';
 import { SkillService } from '../skill.service';
+import {Adventurer} from '../../adventurer/adventurer.class';
+import {SkillState} from '../skill-state.service';
 
 @Component({
   selector: 'app-choose-skill',
@@ -12,17 +22,24 @@ import { SkillService } from '../skill.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChooseSkillComponent {
-  public skill: ResourceRef<Skill>;
+  public skill: WritableSignal<Skill | undefined>;
+  public isLoading: Signal<boolean>;
+  public isError: Signal<unknown>;
+
   @Output() private skillSelected = new EventEmitter<boolean>();
 
-  constructor(private skillService: SkillService) {
-    this.skill = this.skillService.skillResource;
-    this.skill.reload();
+  constructor(private skillState: SkillState,
+              private skillService: SkillService) {
+    this.skill = this.skillState.skill;
+    this.isLoading = this.skillState.isSkillLoading;
+    this.isError = this.skillState.isSkillError;
+
+    this.skillService.reloadSkill();
   }
 
   public selectSkill(): void {
-    this.skillService.adventurerSkills.update((skills) => {
-      const skill: Skill | undefined = this.skill.value();
+    this.skillState.adventurerSkills.update((skills) => {
+      const skill: Skill | undefined = this.skill();
 
       if (!skill) return skills;
 

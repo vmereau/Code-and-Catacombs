@@ -24,6 +24,7 @@ import { Skill, SkillTargetCharacterEnum } from '../skill/skill.class';
 import { SkillService } from '../skill/skill.service';
 import {AdventurerState} from '../adventurer/adventurer-state.service';
 import {MonsterState} from '../monster/monster-state.service';
+import {SkillState} from '../skill/skill-state.service';
 
 @Component({
   selector: 'app-fight',
@@ -65,14 +66,14 @@ export class FightComponent {
     private monsterState: MonsterState,
     private monsterService: MonsterService,
     private adventurerState: AdventurerState,
-    private skillService: SkillService,
+    private skillState: SkillState,
   ) {
     this.monster = this.monsterState.monster;
     this.isLoading = this.monsterState.isMonsterLoading;
     this.isError = this.monsterState.isMonsterError;
 
     this.adventurer = this.adventurerState.adventurer;
-    this.adventurerSkills = this.skillService.adventurerSkills;
+    this.adventurerSkills = this.skillState.adventurerSkills;
     this.adventurerConsumables = this.adventurerState.consumables;
 
     const endOfFightCheckEffect = effect(() => {

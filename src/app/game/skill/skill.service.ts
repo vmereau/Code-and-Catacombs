@@ -9,7 +9,6 @@ import {AdventurerState} from '../adventurer/adventurer-state.service';
 })
 export class SkillService {
   private apiUrl = `${environment.api.baseUrl}/skill`;
-  public adventurerSkills = signal<Skill[]>([]);
 
   constructor(private adventurerState: AdventurerState,
               private fetchService: FetchService) {}
@@ -17,6 +16,10 @@ export class SkillService {
   public skillResource = resource({
     loader: async ({ request, abortSignal }) => this.fetchSkill(request, abortSignal),
   });
+
+  public reloadSkill(): void {
+    this.skillResource.reload();
+  }
 
   // Function to fetch the story
   private async fetchSkill(request: unknown, abortSignal: AbortSignal): Promise<Skill> {
