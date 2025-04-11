@@ -12,6 +12,7 @@ import { ShopComponent } from './shop/shop.component';
 import { ShopService } from './shop/shop.service';
 import { ChooseSkillComponent } from './skill/choose-skill/choose-skill.component';
 import { ChooseStoryComponent } from './story/choose-story/choose-story.component';
+import {MonsterState} from './monster/monster-state.service';
 
 export enum GameStep {
   InitStory = 0,
@@ -52,7 +53,8 @@ export class GameComponent {
   constructor(
     private choiceService: ChoiceService,
     private shopService: ShopService,
-    private monsterService: MonsterService,
+    private monsterState: MonsterState,
+    private monsterService: MonsterService
   ) {
     // startGameEffect
     effect(() => {
@@ -78,9 +80,9 @@ export class GameComponent {
           console.log('selected Fight');
           this.monsterService.generateNewMonster();
           this.setEncounter(
-            this.monsterService.monster,
-            this.monsterService.isMonsterLoading,
-            this.monsterService.isMonsterError,
+            this.monsterState.monster,
+            this.monsterState.isMonsterLoading,
+            this.monsterState.isMonsterError,
           );
           break;
 

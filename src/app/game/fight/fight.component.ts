@@ -23,6 +23,7 @@ import { SkillInfoComponent } from '../skill/skill-info/skill-info.component';
 import { Skill, SkillTargetCharacterEnum } from '../skill/skill.class';
 import { SkillService } from '../skill/skill.service';
 import {AdventurerState} from '../adventurer/adventurer-state.service';
+import {MonsterState} from '../monster/monster-state.service';
 
 @Component({
   selector: 'app-fight',
@@ -61,13 +62,14 @@ export class FightComponent {
   });
 
   constructor(
+    private monsterState: MonsterState,
     private monsterService: MonsterService,
     private adventurerState: AdventurerState,
     private skillService: SkillService,
   ) {
-    this.monster = this.monsterService.monster;
-    this.isLoading = this.monsterService.isMonsterLoading;
-    this.isError = this.monsterService.isMonsterError;
+    this.monster = this.monsterState.monster;
+    this.isLoading = this.monsterState.isMonsterLoading;
+    this.isError = this.monsterState.isMonsterError;
 
     this.adventurer = this.adventurerState.adventurer;
     this.adventurerSkills = this.skillService.adventurerSkills;

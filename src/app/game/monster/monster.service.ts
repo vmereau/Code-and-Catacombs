@@ -12,37 +12,9 @@ import {AdventurerState} from '../adventurer/adventurer-state.service';
 export class MonsterService {
   private apiUrl = `${environment.api.baseUrl}/monsters`;
 
-  private monstersResource: ResourceRef<Monster[] | undefined> = resource({
+  public monstersResource: ResourceRef<Monster[] | undefined> = resource({
     loader: async ({ request, abortSignal }) => this.fetchMonsters(request, abortSignal),
   });
-
-  public monster = linkedSignal(() => {
-    const monsters: Monster[] | undefined = this.monstersResource.value();
-
-    if (!monsters || monsters.length === 0) {
-      return undefined;
-    }
-
-    const monster = monsters[0];
-    if (!monster) {
-      return undefined;
-    }
-
-    return new Monster(
-      monster.name,
-      monster.level,
-      monster.description,
-      monster.health,
-      monster.attack,
-      monster.mana,
-      monster.defense,
-      monster.experienceGiven,
-      monster.goldGiven,
-    );
-  });
-
-  public isMonsterLoading: Signal<boolean> = computed(() => this.monstersResource.isLoading());
-  public isMonsterError: Signal<unknown> = computed(() => this.monstersResource.error());
 
   constructor(
     private storyService: StoryService,
@@ -56,16 +28,6 @@ export class MonsterService {
 
   public removeMonster(): void {
     this.monstersResource.set(undefined);
-  }
-
-  public updateStats(property: CharacterUpdatableNumberProperties, value: number) {
-    this.monster.update((monster: Monster | undefined) => {
-      if (!monster) return undefined;
-
-      monster[property] += value;
-
-      return { ...monster };
-    });
   }
 
   private async fetchMonsters(request: unknown, abortSignal: AbortSignal): Promise<Monster[] | undefined> {
